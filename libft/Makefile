@@ -92,14 +92,14 @@ RM = rm -rf
 all : $(NAME)
 
 $(NAME) : $(OBJS)
+	@printf "\e[1;32m%-30s\e[0m" "Creating $@"
 	@ar $(ARFLAGS) $(NAME) $(OBJS)
-	@echo "\e[1;32m Creating $@...\e[0m"
-
+	@printf "\e[1;32m%08s\e[0m\n" "[ OK ]"
 $(OBJS_PATH)%.o : srcs/%.c
 	@mkdir -p $(OBJS_PATH)
-	@echo -n "\e[1;34m Compiling $<...\e[0m "
+	@printf "\e[1;36m%-30s\e[0m" "$<"
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
-	@echo "\e[1;32mOK!\e[0m"
+	@printf "\e[1;32m%08s\e[0m\n" "[ OK ]"
 
 clean :
 	@$(RM) $(OBJS_PATH)
