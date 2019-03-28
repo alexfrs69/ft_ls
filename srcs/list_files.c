@@ -6,11 +6,10 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:55:08 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/03/28 18:20:17 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/03/28 18:24:46 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
 #include "libft.h"
 #include "ft_ls.h"
 #include <sys/stat.h>

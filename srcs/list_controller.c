@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:01:24 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/03/28 18:16:32 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/03/28 18:24:50 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft_ls.h"
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <dirent.h>
 
 int		fill_node(t_file *elem, struct dirent *file)
 {
