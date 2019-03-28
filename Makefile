@@ -26,16 +26,15 @@ all : $(NAME)
 
 $(NAME) : $(LIBFT) $(OBJS)
 	@make -C $(LIBFT)
-	@echo -n "\e[1;36m Compiling $@...\e[0m"
+	@printf "\e[1;32m%-30s\e[0m" "Creating $@"
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(INCLUDES)
-	@echo "\e[1;32mOK!\e[0m"
+	@printf "\e[1;32m%08s\e[0m\n" "[ OK ]"
 
 $(OBJS_PATH)%.o : srcs/%.c
 	@mkdir -p $(OBJS_PATH)
-	@echo -n "\e[1;36m Compiling $<...\e[0m "
+	@printf "\e[1;36m%-30s\e[0m" "$<"
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "\e[1;32mOK!\e[0m"
-
+	@printf "\e[1;32m%08s\e[0m\n" "[ OK ]"
 clean :
 	@make clean -C $(LIBFT)
 	@$(RM) $(OBJS_PATH)
