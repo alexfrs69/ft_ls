@@ -73,6 +73,8 @@ SRCS = 	srcs/ft_strlen.c \
 		srcs/ft_nextprime.c \
 		srcs/ft_strndup.c \
 		srcs/ft_strnlen.c \
+		srcs/ft_strichr.c \
+		srcs/ft_pow.c \
 		srcs/get_next_line.c \
 
 OBJS_PATH = objs/

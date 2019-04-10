@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 18:13:42 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/02/02 13:30:38 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/10 16:52:51 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,6 @@ int					ft_isupper(int c);
 int					ft_factorial(int nb);
 int					ft_isprime(int nb);
 int					ft_nextprime(int nb);
+int					ft_strichr(char *str, int c);
+double				ft_pow(double base, double exponent);
 #endif
