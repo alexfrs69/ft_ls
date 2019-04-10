@@ -6,13 +6,14 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/03/28 18:13:45 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/10 16:56:36 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 
+/*
 #define T_UNKNOWN 0
 #define T_BLK 1
 #define T_CHR 2
@@ -20,20 +21,32 @@
 #define T_FIFO 4
 #define T_LNK 5
 #define T_REG 6
-#define T_SOCK 7
+#define T_SOCK 7 */
+
+/*
+** Valid args options (char)
+*/
+#define OPT_l 1
+#define OPT_R 2
 
 #include <dirent.h>
+#include <sys/stat.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct		stat t_stat;
+typedef struct		dirent t_dirent;
 
 typedef struct		s_file {
-	char			name[256];
-	int				type;
-	int				perm_user;
-	int				perm_grp;
-	int				perm_oth;
-	struct s_file *next;
+	t_stat			stat;
+	t_dirent		file;
+	struct s_file	*next;
 }					t_file;
 
-int		get_files(char *path);
+int		save_file(char *path);
 t_file	*add_node(t_file *start, struct dirent *file);
-
+t_file	*get_start_node(void);
+void	display_list(t_file *start);
+int		fill_node(t_file *elem, t_dirent *file);
+int		parse_args(int argc, char **argv);
 #endif

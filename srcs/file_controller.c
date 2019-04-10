@@ -1,47 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_files.c                                       :+:      :+:    :+:   */
+/*   file_controller.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/27 12:55:08 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/03/28 18:24:46 by afrancoi         ###   ########.fr       */
+/*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
+/*   Updated: 2019/04/02 12:17:19 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_ls.h"
-#include <sys/stat.h>
-#include <stdio.h>
 
-int		get_files(char *path)
+int save_file(char *path)
 {
-	DIR *dir;
-	struct dirent	*file;
+	DIR				*dir;
+	t_dirent		*file;
 	t_file			*start;
 	t_file			*elem;
 
-	start = NULL;
+	start = get_start_node();
 	elem = NULL;
 	if(!(dir = opendir(path)))
 		return (0);
-	file = readdir(dir);
-	if(!(start = add_node(NULL, file)))
-	{
-		closedir(dir);
-		return (0);
-	}
+	if(ft_strlen(start->file.d_name) == 0)
+		fill_node(start, readdir(dir));
 	while((file = readdir(dir)))
-	{
-		elem = add_node(start, file);
-		if(elem->name[0] != '.')
-		{
-			ft_putstr(elem->name);
-			ft_putchar(' ');
-		}
-	}
-	ft_putchar('\n');
+			elem = add_node(start, file);
 	closedir(dir);
 	return (1);
 }
+/* TODO
+int save_recusive_file(char *path)
+{
+	DIR				*dir;
+	t_dirent		*file;
+	t_file			*start;
+	t_file			*elem;
+
+	start = get_start_node();
+	elem = NULL;
+	if(!(dir = opendir(path)))
+		return (0);
+	if(ft_strlen(start->file.d_name) == 0)
+		fill_node(start, readdir(dir));
+	while((file = readdir(dir)))
+			elem = add_node(start, file);
+	closedir(dir);
+	return (1);
+}
+*/

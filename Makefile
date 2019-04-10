@@ -6,9 +6,11 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I includes/ -I libft/includes
 
 # Sources & Objects
-SRCS = 	srcs/main.c \
-		srcs/list_files.c \
-		srcs/list_controller.c \
+SRCS = 	srcs/main.c					\
+		srcs/file_controller.c		\
+		srcs/list_controller.c		\
+		srcs/display_controller.c	\
+		srcs/parser.c				\
 
 OBJS_PATH = objs/
 OBJS = $(patsubst srcs/%.c,$(OBJS_PATH)%.o, $(SRCS))

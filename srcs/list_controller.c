@@ -6,22 +6,17 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:01:24 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/03/28 18:24:50 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/02 12:13:29 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_ls.h"
-#include <stdlib.h>
-#include <sys/stat.h>
 
-int		fill_node(t_file *elem, struct dirent *file)
+int		fill_node(t_file *elem, t_dirent *file)
 {
-	struct stat		stats;
-
-	stat(file->d_name, &stats);
-	ft_strcpy(elem->name, file->d_name);
-	elem->type = file->d_type;
+	stat(file->d_name, &elem->stat);
+	elem->file = *file;
 	return (1);
 }
 
@@ -35,7 +30,7 @@ void	link_node(t_file *start, t_file *elem)
 	tmp->next = elem;
 }
 
-t_file	*add_node(t_file *start, struct dirent *file)
+t_file	*add_node(t_file *start, t_dirent *file)
 {
 	t_file	*elem;
 
@@ -45,6 +40,13 @@ t_file	*add_node(t_file *start, struct dirent *file)
 	if (start)
 		link_node(start, elem);
 	return (elem);
+}
+
+t_file *get_start_node(void)
+{
+	static t_file start;
+
+	return(&start);
 }
 
 /* WIP
