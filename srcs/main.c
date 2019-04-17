@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:13:08 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/10 16:55:14 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/17 22:58:42 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,21 @@
 
 int		main(int argc, char **argv)
 {
-	int i;
-	int listopt;
+	int	i;
+	int	listopt;
+	int decal;
 
-	listopt = parse_args(argc, argv);
-	printf("Argc = %d | List opt = %d\n", argc, listopt);
-
-	if (argc == 1)
+	decal = 0;
+	listopt = parse_args(argc, argv, &decal);
+	//printf("Argc = %d | List opt = %d | decal = %d\n", argc, listopt, decal);
+	if ((argc - decal) == 1)
 		save_file(".");
 	else
 	{
-		i = 0;
+		i = (decal ? decal : 0);
 		while (++i < argc)
 		{
-			if (!save_file(argv[1]))
+			if (!save_file(argv[i]))
 			{
 				ft_putstr("ft_ls: ");
 				ft_putstr(argv[i]);

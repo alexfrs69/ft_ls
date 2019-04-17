@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/10 16:56:36 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/17 22:47:07 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@
 /*
 ** Valid args options (char)
 */
-#define OPT_l 1
-#define OPT_R 2
+#define OPT_a 1
+#define OPT_G 2
+#define OPT_l 4
+#define OPT_R 8
+
 
 #include <dirent.h>
 #include <sys/stat.h>
@@ -48,5 +51,5 @@ t_file	*add_node(t_file *start, struct dirent *file);
 t_file	*get_start_node(void);
 void	display_list(t_file *start);
 int		fill_node(t_file *elem, t_dirent *file);
-int		parse_args(int argc, char **argv);
+int		parse_args(int argc, char **argv, int *decal);
 #endif
