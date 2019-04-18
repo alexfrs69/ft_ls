@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/17 22:47:07 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/17 23:03:54 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 /*
 ** Valid args options (char)
 */
-#define OPT_a 1
+#define OPT_A 1
 #define OPT_G 2
-#define OPT_l 4
+#define OPT_L 4
 #define OPT_R 8
 
 
