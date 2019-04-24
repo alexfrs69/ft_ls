@@ -10,6 +10,9 @@ SRCS = 	srcs/main.c					\
 		srcs/file_controller.c		\
 		srcs/list_controller.c		\
 		srcs/display_controller.c	\
+		srcs/options_recursive.c	\
+		srcs/queue_controller.c		\
+		srcs/router.c				\
 		srcs/parser.c				\
 
 OBJS_PATH = objs/

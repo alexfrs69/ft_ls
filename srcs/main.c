@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:13:08 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/17 22:58:42 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/24 04:34:16 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,28 @@
 
 int		main(int argc, char **argv)
 {
-	int	i;
-	int	listopt;
-	int decal;
+	int		i;
+	int		listopt;
+	int		decal;
+	char	*tofind;
+	t_queue	*queue;
 
+	tofind = NULL;
 	decal = 0;
 	listopt = parse_args(argc, argv, &decal);
-	//printf("Argc = %d | List opt = %d | decal = %d\n", argc, listopt, decal);
 	if ((argc - decal) == 1)
-		save_file(".");
+		save_file(".", get_start_node());
 	else
 	{
+		queue = get_queue_node();
 		i = (decal ? decal : 0);
+		queue_fill(queue, argv[++i]);
 		while (++i < argc)
 		{
-			if (!save_file(argv[i]))
-			{
-				ft_putstr("ft_ls: ");
-				ft_putstr(argv[i]);
-				ft_putendl(": No such file or directory");
-				return (1);
-			}
+			queue_add(queue, argv[i]);
 		}
+		route_to(queue, listopt);
 	}
-	display_list(get_start_node());
 	return (0);
 }
 

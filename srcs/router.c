@@ -1,39 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_controller.c                               :+:      :+:    :+:   */
+/*   router.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/24 04:34:33 by afrancoi         ###   ########.fr       */
+/*   Created: 2019/04/18 15:29:54 by afrancoi          #+#    #+#             */
+/*   Updated: 2019/04/24 03:42:24 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_ls.h"
 
-void	display_list(t_file *start)
+void	route_to(t_queue *queu, int listoptions)
 {
-	t_file *elem;
-
-	elem = start;
-	while(elem)
-	{
-		if(elem->file.d_name[0] != '.')
-			printf("%s\n", elem->file.d_name);
-		elem = elem->next;
-	}
-}
-
-void	display_queue(t_queue *queue)
-{
-	t_queue *elem;
-
-	elem = queue;
-	while(elem)
-	{
-		printf("queue->%s\n", elem->path);
-		elem = elem->next;
-	}
+	if ((listoptions & OPT_R))
+		options_recursive(queu, listoptions);
+	else
+		queue_file(queu, listoptions);
 }

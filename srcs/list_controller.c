@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:01:24 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/02 12:13:29 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/24 03:43:06 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	link_node(t_file *start, t_file *elem)
 	t_file *tmp;
 
 	tmp = start;
-	while(tmp->next)
+	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = elem;
 }
@@ -34,7 +34,7 @@ t_file	*add_node(t_file *start, t_dirent *file)
 {
 	t_file	*elem;
 
-	if(!(elem = (t_file*)malloc(sizeof(t_file))))
+	if (!(elem = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
 	fill_node(elem, file);
 	if (start)
@@ -46,7 +46,7 @@ t_file *get_start_node(void)
 {
 	static t_file start;
 
-	return(&start);
+	return (&start);
 }
 
 /* WIP

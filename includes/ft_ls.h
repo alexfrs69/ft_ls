@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/17 23:03:54 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/24 04:32:51 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/syslimits.h>
 
 typedef struct		stat t_stat;
 typedef struct		dirent t_dirent;
@@ -46,10 +47,23 @@ typedef struct		s_file {
 	struct s_file	*next;
 }					t_file;
 
-int		save_file(char *path);
+typedef struct		s_queue {
+	char			path[PATH_MAX];
+	struct s_queue	*next;
+}					t_queue;
+
+int		save_file(char *path, t_file *start);
 t_file	*add_node(t_file *start, struct dirent *file);
 t_file	*get_start_node(void);
+t_queue *get_queue_node(void);
+t_queue	*queue_add(t_queue *start, char *path);
 void	display_list(t_file *start);
+void	display_queue(t_queue *queue);
 int		fill_node(t_file *elem, t_dirent *file);
 int		parse_args(int argc, char **argv, int *decal);
+void	route_to(t_queue *queu, int listopt);
+void	options_recursive(t_queue *queue, int listoptions);
+void	queue_file(t_queue *queue, int listopt);
+void	queue_fill(t_queue *elem, char *path);
+
 #endif
