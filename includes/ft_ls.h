@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/24 04:32:51 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/04/24 04:44:58 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,13 @@
 # define FT_LS_H
 
 /*
-#define T_UNKNOWN 0
-#define T_BLK 1
-#define T_CHR 2
-#define T_DIR 3
-#define T_FIFO 4
-#define T_LNK 5
-#define T_REG 6
-#define T_SOCK 7 */
-
-/*
-** Valid args options (char)
+** Args options
 */
+
 #define OPT_A 1
 #define OPT_G 2
 #define OPT_L 4
 #define OPT_R 8
-
 
 #include <dirent.h>
 #include <sys/stat.h>
@@ -52,18 +42,38 @@ typedef struct		s_queue {
 	struct s_queue	*next;
 }					t_queue;
 
-int		save_file(char *path, t_file *start);
+/*
+** File struct system
+*/
+
 t_file	*add_node(t_file *start, struct dirent *file);
 t_file	*get_start_node(void);
-t_queue *get_queue_node(void);
-t_queue	*queue_add(t_queue *start, char *path);
 void	display_list(t_file *start);
-void	display_queue(t_queue *queue);
 int		fill_node(t_file *elem, t_dirent *file);
-int		parse_args(int argc, char **argv, int *decal);
-void	route_to(t_queue *queu, int listopt);
-void	options_recursive(t_queue *queue, int listoptions);
+
+/*
+** Queue struct system
+*/
+
 void	queue_file(t_queue *queue, int listopt);
 void	queue_fill(t_queue *elem, char *path);
+t_queue *get_queue_node(void);
+t_queue	*queue_add(t_queue *start, char *path);
+void	display_queue(t_queue *queue);
+
+/*
+** Parser
+*/
+int		parse_args(int argc, char **argv, int *decal);
+
+/*
+** Router system
+*/
+void	route_to(t_queue *queu, int listopt);
+
+/*
+** Options
+*/
+void	options_recursive(t_queue *queue, int listoptions);
 
 #endif
