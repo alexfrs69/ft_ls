@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:13:59 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/24 04:32:46 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/03 15:37:41 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,22 @@ void	queue_fill(t_queue *elem, char *path)
 	ft_strcpy(elem->path, path);
 }
 
-/*int		queue_del(t_queue *start, t_queue *elem)
+void	queue_del(t_queue *start, t_queue *elem)
 {
+	t_queue *tmp;
 
-}*/
+	tmp = start;
+	while(tmp->next != elem && tmp)
+		tmp = tmp->next
+	if(tmp)
+	{
+		if(tmp->next->next)
+			tmp->next = tmp->next->next;
+		else
+			tmp->next = NULL;
+		free(tmp->next);
+	}
+}
 
 t_queue *get_queue_node(void)
 {
