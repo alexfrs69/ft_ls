@@ -3,7 +3,7 @@ NAME = ft_ls
 
 # GCC
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I includes/ -I libft/includes
+CFLAGS =  -g3 -fsanitize=address -I includes/ -I libft/includes -Wall -Wextra -Werror
 
 # Sources & Objects
 SRCS = 	srcs/main.c					\

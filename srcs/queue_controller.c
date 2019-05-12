@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:13:59 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/03 15:37:41 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/12 02:19:05 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_queue	*queue_add(t_queue *start, char *path)
 
 	if (ft_strlen(path) >= PATH_MAX)
 		return (NULL);
-	if (!(elem = (t_queue*)malloc(sizeof(t_queue))))
+	if (!(elem = (t_queue*)ft_memalloc(sizeof(t_queue))))
 		return (NULL);
 	queue_fill(elem, path);
 	if (start)
@@ -42,13 +42,13 @@ void	queue_fill(t_queue *elem, char *path)
 	ft_strcpy(elem->path, path);
 }
 
-void	queue_del(t_queue *start, t_queue *elem)
+void	queue_del_elem(t_queue *start, t_queue *elem)
 {
 	t_queue *tmp;
 
 	tmp = start;
 	while(tmp->next != elem && tmp)
-		tmp = tmp->next
+		tmp = tmp->next;
 	if(tmp)
 	{
 		if(tmp->next->next)
@@ -56,6 +56,20 @@ void	queue_del(t_queue *start, t_queue *elem)
 		else
 			tmp->next = NULL;
 		free(tmp->next);
+	}
+}
+
+void	queue_del(t_queue *start)
+{
+	t_queue *tmp;
+	t_queue *tmp2;
+
+	tmp = start;
+	while (tmp)
+	{
+		tmp2 = tmp;
+		free(tmp2);
+		tmp = tmp->next;
 	}
 }
 

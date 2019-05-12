@@ -6,16 +6,19 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:01:24 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/24 03:43:06 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/12 02:47:44 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_ls.h"
 
-int		fill_node(t_file *elem, t_dirent *file)
+int		fill_node(t_file *elem, t_dirent *file, char *path)
 {
-	stat(file->d_name, &elem->stat);
+	if(!file)
+		return (0);
+	ft_strcpy(elem->path, join_path(path, file->d_name));
+	lstat(elem->path, &elem->stat);
 	elem->file = *file;
 	return (1);
 }
@@ -24,19 +27,21 @@ void	link_node(t_file *start, t_file *elem)
 {
 	t_file *tmp;
 
+	if (!start || !elem)
+		return ;
 	tmp = start;
-	while (tmp->next)
+	while (tmp && tmp->next)
 		tmp = tmp->next;
 	tmp->next = elem;
 }
 
-t_file	*add_node(t_file *start, t_dirent *file)
+t_file	*add_node(t_file *start, t_dirent *file, char *path)
 {
 	t_file	*elem;
 
-	if (!(elem = (t_file*)malloc(sizeof(t_file))))
+	if (!(elem = (t_file*)ft_memalloc(sizeof(t_file))))
 		return (NULL);
-	fill_node(elem, file);
+	fill_node(elem, file, path);
 	if (start)
 		link_node(start, elem);
 	return (elem);

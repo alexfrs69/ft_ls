@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 16:20:40 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/04/25 18:49:45 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:13:12 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int				parse_args(int argc, char **argv, int *decal)
 						*decal += 1;
 					else
 						exit(1);
+					avi++;
 				}
 			}
 			else
