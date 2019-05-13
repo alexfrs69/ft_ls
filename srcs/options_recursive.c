@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/12 02:38:50 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/13 04:33:13 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	recur_queue_file(t_queue *queue, t_file *start)
 		}
 		if (ft_strlen(start->file.d_name) == 0)
 			fill_node(start, readdir(dir), queue->path);
+		printf("%s :\n", queue->path);
 		while ((file = readdir(dir)))
 		{
 			if(file->d_name[0] == '.')
@@ -55,9 +56,10 @@ static int	recur_queue_file(t_queue *queue, t_file *start)
 			}
 			add_node(start, file, queue->path);
 		}
+		closedir(dir);
+		display_list(start);
 		queue = queue->next;
 	}
-	display_list(start);
 	queue_del(queue);
 	if (newqueue)
 		recur_queue_file(newqueue, start);
