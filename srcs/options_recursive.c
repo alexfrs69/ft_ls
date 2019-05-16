@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/13 04:33:13 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/16 03:00:44 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static int	recur_queue_file(t_queue *queue, t_file *start)
 			queue = queue->next;
 			continue ;
 		}
-		if (ft_strlen(start->file.d_name) == 0)
-			fill_node(start, readdir(dir), queue->path);
-		printf("%s :\n", queue->path);
+		if(!start)
+			if(!(start = add_node(NULL, readdir(dir), queue->path)))
+				ft_putendl(" !!! malloc failed start !!!");
 		while ((file = readdir(dir)))
 		{
 			if(file->d_name[0] == '.')
@@ -57,20 +57,19 @@ static int	recur_queue_file(t_queue *queue, t_file *start)
 			add_node(start, file, queue->path);
 		}
 		closedir(dir);
-		display_list(start);
+		display_list(start, queue->path);
+		list_del(start);
+		start = NULL;
 		queue = queue->next;
 	}
 	queue_del(queue);
 	if (newqueue)
-		recur_queue_file(newqueue, start);
+		recur_queue_file(newqueue, NULL);
 	return (1);
 }
 
 void		options_recursive(t_queue *queue, int listoptions)
 {
-	t_file *start;
-
 	listoptions = 0;
-	start = get_start_node();
-	recur_queue_file(queue, start);
+	recur_queue_file(queue, NULL);
 }

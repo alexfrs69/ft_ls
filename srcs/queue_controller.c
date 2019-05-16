@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:13:59 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/12 02:19:05 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/16 04:03:49 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,8 @@ void	queue_del(t_queue *start)
 	while (tmp)
 	{
 		tmp2 = tmp;
-		free(tmp2);
 		tmp = tmp->next;
+		if(tmp2)
+			free(tmp2);
 	}
-}
-
-t_queue *get_queue_node(void)
-{
-	static t_queue queue;
-
-	return (&queue);
 }
