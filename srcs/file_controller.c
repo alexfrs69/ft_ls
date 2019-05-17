@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/16 03:58:40 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/17 03:20:43 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int save_file(char *path)
 		add_node(start, file, path);
 	closedir(dir);
 	display_list(start, path);
-	list_del(start);
+	list_del(&start);
 	return (1);
 }
 

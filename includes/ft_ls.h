@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/16 03:57:56 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/17 03:16:49 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct		s_queue {
 
 t_file	*add_node(t_file *start, struct dirent *file, char *path);
 t_file	*get_start_node(void);
-void	list_del(t_file *start);
+void	list_del(t_file **start);
 void	display_list(t_file *start, char *path);
 int		fill_node(t_file *elem, t_dirent *file, char *path);
 int		save_file(char *path);
