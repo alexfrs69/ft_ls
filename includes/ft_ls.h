@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/17 03:16:49 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/18 02:32:46 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct		dirent t_dirent;
 
 typedef struct		s_file {
 	t_stat			stat;
-	t_dirent		file;
+	t_dirent		dirent;
 	char			path[PATH_MAX];
 	struct s_file	*next;
 }					t_file;
@@ -48,11 +48,11 @@ typedef struct		s_queue {
 ** File struct system
 */
 
-t_file	*add_node(t_file *start, struct dirent *file, char *path);
+t_file	*add_node(t_file *start, t_dirent *dirent, char *path);
 t_file	*get_start_node(void);
 void	list_del(t_file **start);
 void	display_list(t_file *start, char *path);
-int		fill_node(t_file *elem, t_dirent *file, char *path);
+int		fill_node(t_file *elem, t_dirent *dirent, char *path);
 int		save_file(char *path);
 
 /*

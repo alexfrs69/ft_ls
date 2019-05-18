@@ -6,14 +6,14 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/16 03:00:44 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/18 02:29:39 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "libft.h"
 
-char	*join_path(char *path, char *name)
+char			*join_path(char *path, char *name)
 {
 	char *ret;
 	char *tmp;
@@ -26,50 +26,66 @@ char	*join_path(char *path, char *name)
 	return (ret);
 }
 
-static int	recur_queue_file(t_queue *queue, t_file *start)
+static int	save_dir(char *path, t_queue **newqueue, t_file **start)
 {
 	DIR			*dir;
-	t_dirent	*file;
-	t_queue		*newqueue;
+	t_dirent	*dirent;
 
-	newqueue = NULL;
-	while (queue)
+	if ((dir = opendir(path)))
 	{
-		if (!(dir = opendir(queue->path)))
+		while ((dirent = readdir(dir)))
 		{
-			queue = queue->next;
-			continue ;
-		}
-		if(!start)
-			if(!(start = add_node(NULL, readdir(dir), queue->path)))
-				ft_putendl(" !!! malloc failed start !!!");
-		while ((file = readdir(dir)))
-		{
-			if(file->d_name[0] == '.')
+			if (ft_strequ(dirent->d_name, ".")
+				|| ft_strequ(dirent->d_name, ".."))
 				continue ;
-			if(file->d_type & DT_DIR)
+			if (!*start)
+				if (!(*start = add_node(NULL, dirent, path)))
+					return (-1);
+			if (dirent->d_type & DT_DIR)
 			{
-				if (!newqueue)
-					newqueue = queue_add(NULL, join_path(queue->path, file->d_name));
+				if (!*newqueue)
+					*newqueue = queue_add(NULL,
+						join_path(path, dirent->d_name));
 				else
-					queue_add(newqueue, join_path(queue->path, file->d_name));
+					queue_add(*newqueue,
+						join_path(path, dirent->d_name));
 			}
-			add_node(start, file, queue->path);
+			add_node(*start, dirent, path);
 		}
 		closedir(dir);
+		return (1);
+	}
+	return (0);
+}
+
+static int		recur_queue_file(t_queue *queue)
+{
+	t_queue		*newqueue;
+	t_file		*start;
+
+	newqueue = NULL;
+	start = NULL;
+	while (queue)
+	{
+		if(!save_dir(queue->path, &newqueue, &start))
+		{
+			if (start)
+				add_node(start, NULL, queue->path);
+			else
+				start = add_node(NULL, NULL, queue->path);
+		}
 		display_list(start, queue->path);
-		list_del(start);
-		start = NULL;
+		list_del(&start);
 		queue = queue->next;
 	}
 	queue_del(queue);
 	if (newqueue)
-		recur_queue_file(newqueue, NULL);
+		recur_queue_file(newqueue);
 	return (1);
 }
 
-void		options_recursive(t_queue *queue, int listoptions)
+void			options_recursive(t_queue *queue, int listoptions)
 {
 	listoptions = 0;
-	recur_queue_file(queue, NULL);
+	recur_queue_file(queue);
 }

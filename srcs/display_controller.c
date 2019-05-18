@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/16 02:19:38 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/18 02:37:42 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,18 @@ void	display_list(t_file *start, char *path)
 
 	if(!start)
 		return ;
-	ft_putendl(path);
 	elem = start;
+	if(ft_strlen(elem->dirent.d_name))
+		ft_putendl(path);
 	while(elem)
 	{
-		if(elem->file.d_name[0] != '.')
+		if(ft_strlen(elem->dirent.d_name))
 		{
-			printf("	%s\n", elem->file.d_name);
+			if(elem->dirent.d_name[0] != '.')
+				printf("	%s\n", elem->dirent.d_name);
 		}
+		else
+			printf("%s \n", elem->path);
 		elem = elem->next;
 	}
 }
