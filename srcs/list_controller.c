@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:01:24 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/18 02:32:50 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/19 06:55:28 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int		fill_node(t_file *elem, t_dirent *dirent, char *path)
 {
 	char *tmp;
 
-	if(dirent)
+	if (dirent)
 	{
-		if(!(tmp = join_path(path, dirent->d_name)))
+		if (!(tmp = join_path(path, dirent->d_name)))
 			return (0);
 		elem->dirent = *dirent;
 	}
@@ -65,7 +65,7 @@ void	list_del(t_file **start)
 	{
 		tmp2 = tmp;
 		tmp = tmp->next;
-		if(tmp2)
+		if (tmp2)
 			free(tmp2);
 	}
 	*start = NULL;
