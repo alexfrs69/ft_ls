@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/18 02:29:39 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/19 07:09:52 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char			*join_path(char *path, char *name)
 	return (ret);
 }
 
-static int	save_dir(char *path, t_queue **newqueue, t_file **start)
+static int	save_dir(char *path, t_queue **newqueue, t_file **start, int opts)
 {
 	DIR			*dir;
 	t_dirent	*dirent;
@@ -38,6 +38,9 @@ static int	save_dir(char *path, t_queue **newqueue, t_file **start)
 			if (ft_strequ(dirent->d_name, ".")
 				|| ft_strequ(dirent->d_name, ".."))
 				continue ;
+			if(!(opts & OPT_A))
+				if(dirent->d_name[0] == '.')
+					continue ;
 			if (!*start)
 				if (!(*start = add_node(NULL, dirent, path)))
 					return (-1);
@@ -58,7 +61,7 @@ static int	save_dir(char *path, t_queue **newqueue, t_file **start)
 	return (0);
 }
 
-static int		recur_queue_file(t_queue *queue)
+static int		recur_queue_file(t_queue *queue, int opts)
 {
 	t_queue		*newqueue;
 	t_file		*start;
@@ -67,7 +70,7 @@ static int		recur_queue_file(t_queue *queue)
 	start = NULL;
 	while (queue)
 	{
-		if(!save_dir(queue->path, &newqueue, &start))
+		if(!save_dir(queue->path, &newqueue, &start, opts))
 		{
 			if (start)
 				add_node(start, NULL, queue->path);
@@ -80,12 +83,11 @@ static int		recur_queue_file(t_queue *queue)
 	}
 	queue_del(queue);
 	if (newqueue)
-		recur_queue_file(newqueue);
+		recur_queue_file(newqueue, opts);
 	return (1);
 }
 
 void			options_recursive(t_queue *queue, int listoptions)
 {
-	listoptions = 0;
-	recur_queue_file(queue);
+	recur_queue_file(queue, listoptions);
 }

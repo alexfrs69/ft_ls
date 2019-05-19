@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:13:08 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/19 03:14:08 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/19 07:41:42 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ int		main(int argc, char **argv)
 	decal = 0;
 	listopt = parse_args(argc, argv, &decal);
 	if ((argc - decal) == 1)
-		save_file(".");
+		route_to(queue_add(NULL, "."), listopt);
 	else
 	{
 		i = (decal ? decal : 0);
 		while (++i < argc)
 		{
-			if(!lstat(argv[i], &stat))
+			if (!lstat(argv[i], &stat))
 			{
-				if(!queue)
+				if (!queue)
 					queue = queue_add(NULL, argv[i]);
 				else
 					queue_add(queue, argv[i]);
@@ -44,6 +44,3 @@ int		main(int argc, char **argv)
 	}
 	return (0);
 }
-
-
-

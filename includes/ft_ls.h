@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/18 02:32:46 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/19 07:23:29 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_file	*get_start_node(void);
 void	list_del(t_file **start);
 void	display_list(t_file *start, char *path);
 int		fill_node(t_file *elem, t_dirent *dirent, char *path);
-int		save_file(char *path);
+int		save_file(char *path, int listoptions);
 
 /*
 ** Queue struct system

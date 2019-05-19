@@ -6,24 +6,31 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/17 03:20:43 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/19 07:39:50 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_ls.h"
 
-int save_file(char *path)
+int		save_file(char *path, int listopt)
 {
 	DIR				*dir;
-	t_dirent		*file;
+	t_dirent		*dirent;
 	t_file			*start;
 
 	if (!(dir = opendir(path)))
 		return (0);
-	start = add_node(NULL, readdir(dir), path);
-	while ((file = readdir(dir)))
-		add_node(start, file, path);
+	while ((dirent = readdir(dir)))
+	{
+		if(!(listopt & OPT_A))
+			if(dirent->d_name[0] == '.')
+				continue ;
+		if(!start)
+			start = add_node(NULL, dirent, path);
+		else
+			add_node(start, dirent, path);
+	}
 	closedir(dir);
 	display_list(start, path);
 	list_del(&start);
@@ -35,12 +42,11 @@ void	queue_file(t_queue *queue, int listopt)
 	t_queue			*tmp;
 	t_file			*start;
 
-	listopt = 0;
 	tmp = queue;
 	start = NULL;
 	while (tmp)
 	{
-		save_file(tmp->path);
+		save_file(tmp->path, listopt);
 		tmp = tmp->next;
 	}
 }
