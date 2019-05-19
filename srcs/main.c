@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:13:08 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/16 04:02:21 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/19 03:14:08 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		main(int argc, char **argv)
 	int		listopt;
 	int		decal;
 	t_queue	*queue;
+	t_stat	stat;
 
 	decal = 0;
 	listopt = parse_args(argc, argv, &decal);
@@ -27,9 +28,18 @@ int		main(int argc, char **argv)
 	else
 	{
 		i = (decal ? decal : 0);
-		queue = queue_add(NULL, argv[++i]);
 		while (++i < argc)
-			queue_add(queue, argv[i]);
+		{
+			if(!lstat(argv[i], &stat))
+			{
+				if(!queue)
+					queue = queue_add(NULL, argv[i]);
+				else
+					queue_add(queue, argv[i]);
+			}
+			else
+				printf("ft_ls: %s no such file or directory\n", argv[i]);
+		}
 		route_to(queue, listopt);
 	}
 	return (0);
