@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:01:24 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/19 06:55:28 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/23 05:51:28 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,17 @@ int		fill_node(t_file *elem, t_dirent *dirent, char *path)
 	{
 		if (!(tmp = join_path(path, dirent->d_name)))
 			return (0);
+		elem->infodir = 1;
 		elem->dirent = *dirent;
 	}
 	else
+	{
 		tmp = path;
+		elem->infodir = 0;
+	}
 	ft_strcpy(elem->path, tmp);
-	free(tmp);
+	if (dirent)
+		free(tmp);
 	lstat(elem->path, &elem->stat);
 	return (1);
 }
@@ -49,6 +54,7 @@ t_file	*add_node(t_file *start, t_dirent *dirent, char *path)
 
 	if (!(elem = (t_file*)ft_memalloc(sizeof(t_file))))
 		return (NULL);
+	elem->next = NULL;
 	fill_node(elem, dirent, path);
 	if (start)
 		link_node(start, elem);
@@ -70,4 +76,3 @@ void	list_del(t_file **start)
 	}
 	*start = NULL;
 }
-

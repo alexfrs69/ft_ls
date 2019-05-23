@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/19 07:09:52 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/23 05:51:04 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char			*join_path(char *path, char *name)
 	char *ret;
 	char *tmp;
 
-	if(*path == '/' && ft_strlen(path) == 1)
+	if (*path == '/' && ft_strlen(path) == 1)
 		return (ft_strjoin(path, name));
 	tmp = ft_strjoin(path, "/");
 	ret = ft_strjoin(tmp, name);
@@ -26,51 +26,64 @@ char			*join_path(char *path, char *name)
 	return (ret);
 }
 
-static int	save_dir(char *path, t_queue **newqueue, t_file **start, int opts)
+static int		check(char *name, int opts)
+{
+	if (ft_strequ(name, ".")
+		|| ft_strequ(name, ".."))
+		return (0);
+	if (!(opts & OPT_A))
+		if (name[0] == '.')
+			return (0);
+	return (1);
+}
+
+static t_file	*save_dir(char *path, t_queue **newqueue, int opts)
 {
 	DIR			*dir;
 	t_dirent	*dirent;
+	t_file		*start;
+	char		*tmp;
 
+	start = NULL;
 	if ((dir = opendir(path)))
 	{
 		while ((dirent = readdir(dir)))
 		{
-			if (ft_strequ(dirent->d_name, ".")
-				|| ft_strequ(dirent->d_name, ".."))
+			if (!check(dirent->d_name, opts))
 				continue ;
-			if(!(opts & OPT_A))
-				if(dirent->d_name[0] == '.')
-					continue ;
-			if (!*start)
-				if (!(*start = add_node(NULL, dirent, path)))
-					return (-1);
 			if (dirent->d_type & DT_DIR)
 			{
+				if (!(tmp = join_path(path, dirent->d_name)))
+					continue ;
 				if (!*newqueue)
-					*newqueue = queue_add(NULL,
-						join_path(path, dirent->d_name));
+					*newqueue = queue_add(NULL, tmp);
 				else
-					queue_add(*newqueue,
-						join_path(path, dirent->d_name));
+					queue_add(*newqueue, tmp);
+				ft_strdel(&tmp);
 			}
-			add_node(*start, dirent, path);
+			if (start)
+				add_node(start, dirent, path);
+			else
+				start = add_node(NULL, dirent, path);
 		}
 		closedir(dir);
-		return (1);
+		return (start);
 	}
-	return (0);
+	return (NULL);
 }
 
 static int		recur_queue_file(t_queue *queue, int opts)
 {
 	t_queue		*newqueue;
 	t_file		*start;
+	t_queue		*tmp;
 
+	tmp = queue;
 	newqueue = NULL;
 	start = NULL;
 	while (queue)
 	{
-		if(!save_dir(queue->path, &newqueue, &start, opts))
+		if (!(start = save_dir(queue->path, &newqueue, opts)))
 		{
 			if (start)
 				add_node(start, NULL, queue->path);
@@ -81,7 +94,7 @@ static int		recur_queue_file(t_queue *queue, int opts)
 		list_del(&start);
 		queue = queue->next;
 	}
-	queue_del(queue);
+	queue_del(&tmp);
 	if (newqueue)
 		recur_queue_file(newqueue, opts);
 	return (1);

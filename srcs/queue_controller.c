@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:13:59 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/16 04:03:49 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/23 05:49:14 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_queue	*queue_add(t_queue *start, char *path)
 		return (NULL);
 	if (!(elem = (t_queue*)ft_memalloc(sizeof(t_queue))))
 		return (NULL);
+	elem->next = NULL;
 	queue_fill(elem, path);
 	if (start)
 		queue_link(start, elem);
@@ -47,11 +48,11 @@ void	queue_del_elem(t_queue *start, t_queue *elem)
 	t_queue *tmp;
 
 	tmp = start;
-	while(tmp->next != elem && tmp)
+	while (tmp->next != elem && tmp)
 		tmp = tmp->next;
-	if(tmp)
+	if (tmp)
 	{
-		if(tmp->next->next)
+		if (tmp->next->next)
 			tmp->next = tmp->next->next;
 		else
 			tmp->next = NULL;
@@ -59,17 +60,18 @@ void	queue_del_elem(t_queue *start, t_queue *elem)
 	}
 }
 
-void	queue_del(t_queue *start)
+void	queue_del(t_queue **start)
 {
 	t_queue *tmp;
 	t_queue *tmp2;
 
-	tmp = start;
+	tmp = *start;
 	while (tmp)
 	{
 		tmp2 = tmp;
 		tmp = tmp->next;
-		if(tmp2)
+		if (tmp2)
 			free(tmp2);
 	}
+	*start = NULL;
 }

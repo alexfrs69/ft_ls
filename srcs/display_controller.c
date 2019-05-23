@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/19 07:12:38 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/23 05:50:15 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ void	display_list(t_file *start, char *path)
 	if (!start)
 		return ;
 	elem = start;
-	if (ft_strlen(elem->dirent.d_name))
+	if (elem->infodir)
 		ft_putendl(path);
 	while (elem)
 	{
-		if (ft_strlen(elem->dirent.d_name))
-		{
-			printf("	%s\n", elem->dirent.d_name);
-		}
+		if (elem->infodir)
+			printf("	%s (%lu) (%d)\n", elem->dirent.d_name, sizeof(elem->dirent.d_name), PATH_MAX);
 		else
 			printf("%s \n", elem->path);
 		elem = elem->next;

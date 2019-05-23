@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 16:20:40 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/19 07:17:58 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/23 05:48:44 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int				parse_args(int argc, char **argv, int *decal)
 			{
 				while (argv[aci][avi])
 				{
-					if(!cacl_offset_opt(argv, aci, avi, &listoptions))
+					if (!cacl_offset_opt(argv, aci, avi, &listoptions))
 						exit(1);
 					avi++;
 				}
