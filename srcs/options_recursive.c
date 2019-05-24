@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/23 05:51:04 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/25 01:30:18 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,10 @@ static t_file	*save_dir(char *path, t_queue **newqueue, int opts)
 			{
 				if (!(tmp = join_path(path, dirent->d_name)))
 					continue ;
-				if (!*newqueue)
-					*newqueue = queue_add(NULL, tmp);
-				else
-					queue_add(*newqueue, tmp);
+				*newqueue = init_queue(*newqueue, tmp);
 				ft_strdel(&tmp);
 			}
-			if (start)
-				add_node(start, dirent, path);
-			else
-				start = add_node(NULL, dirent, path);
+			start = init_node(start, dirent, path);
 		}
 		closedir(dir);
 		return (start);
@@ -72,7 +66,7 @@ static t_file	*save_dir(char *path, t_queue **newqueue, int opts)
 	return (NULL);
 }
 
-static int		recur_queue_file(t_queue *queue, int opts)
+int				options_recursive(t_queue *queue, int opts)
 {
 	t_queue		*newqueue;
 	t_file		*start;
@@ -84,23 +78,13 @@ static int		recur_queue_file(t_queue *queue, int opts)
 	while (queue)
 	{
 		if (!(start = save_dir(queue->path, &newqueue, opts)))
-		{
-			if (start)
-				add_node(start, NULL, queue->path);
-			else
-				start = add_node(NULL, NULL, queue->path);
-		}
+			start = init_node(start, NULL, queue->path);
 		display_list(start, queue->path);
 		list_del(&start);
 		queue = queue->next;
 	}
 	queue_del(&tmp);
 	if (newqueue)
-		recur_queue_file(newqueue, opts);
+		options_recursive(newqueue, opts);
 	return (1);
-}
-
-void			options_recursive(t_queue *queue, int listoptions)
-{
-	recur_queue_file(queue, listoptions);
 }

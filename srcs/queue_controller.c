@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:13:59 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/23 05:49:14 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/24 00:17:05 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	queue_link(t_queue *start, t_queue *new)
 {
 	t_queue *tmp;
 
+	if (!start || !new)
+		return ;
 	tmp = start;
-	while (tmp->next)
+	while (tmp && tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
 }
