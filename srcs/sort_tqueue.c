@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 08:40:13 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 08:43:15 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/25 08:52:33 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_queue	*sortedmerge(t_queue *a, t_queue *b)
 		return (b);
 	else if (!b)
 		return (a);
-	if (ft_strcmp(a->path, b->path) < 0)
+	if (ft_strcmp(a->path, b->path) <= 0)
 	{
 		result = a;
 		result->next = sortedmerge(a->next, b);
