@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 08:48:02 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/25 09:05:58 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int				options_recursive(t_queue *queue, int opts)
 	while (queue)
 	{
 		lstat(queue->path, &stat);
-		if ((stat.st_mode & S_IFDIR) || (stat.st_mode & S_IFLNK))
+		if ((S_ISDIR(stat.st_mode)) || (S_ISLNK(stat.st_mode)))
 		{
 			if (!(start = save_dir(queue->path, &newqueue, opts)))
 				ft_error(errno, queue->path);

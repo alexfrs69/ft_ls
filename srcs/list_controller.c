@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:01:24 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/24 23:42:23 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/25 08:55:01 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		fill_node(t_file *elem, t_dirent *dirent, char *path)
 	else
 	{
 		tmp = path;
+		ft_strcpy(elem->name, tmp);
 		elem->infodir = 0;
 	}
 	ft_strcpy(elem->path, tmp);
