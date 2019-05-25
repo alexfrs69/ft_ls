@@ -6,12 +6,13 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 01:30:18 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/25 03:36:58 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "libft.h"
+#include <errno.h>
 
 char			*join_path(char *path, char *name)
 {
@@ -71,13 +72,20 @@ int				options_recursive(t_queue *queue, int opts)
 	t_queue		*newqueue;
 	t_file		*start;
 	t_queue		*tmp;
+	t_stat		stat;
 
 	tmp = queue;
 	newqueue = NULL;
 	start = NULL;
 	while (queue)
 	{
-		if (!(start = save_dir(queue->path, &newqueue, opts)))
+		lstat(queue->path, &stat);
+		if ((stat.st_mode & S_IFDIR))
+		{
+			if (!(start = save_dir(queue->path, &newqueue, opts)))
+				ft_error(errno, queue->path);
+		}
+		else
 			start = init_node(start, NULL, queue->path);
 		display_list(start, queue->path);
 		list_del(&start);

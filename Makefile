@@ -15,6 +15,7 @@ SRCS = 	srcs/main.c					\
 		srcs/router.c				\
 		srcs/parser.c				\
 		srcs/utils.c				\
+		srcs/error.c				\
 
 OBJS_PATH = objs/
 OBJS = $(patsubst srcs/%.c,$(OBJS_PATH)%.o, $(SRCS))

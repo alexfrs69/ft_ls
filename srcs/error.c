@@ -1,46 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_controller.c                               :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 03:36:00 by afrancoi         ###   ########.fr       */
+/*   Created: 2019/05/25 03:14:23 by afrancoi          #+#    #+#             */
+/*   Updated: 2019/05/25 03:35:39 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_ls.h"
+#include "libft.h"
+#include <errno.h>
 
-void	display_list(t_file *start, char *path)
+void	ft_error(int ernb, char *path)
 {
-	t_file *elem;
-
-	if (!start)
-		return ;
-	elem = start;
-	if (elem->infodir)
-		ft_putendl(path);
-	while (elem)
-	{
-		if (elem->infodir)
-			printf("	%s\n", elem->name);
-		else
-			printf("%s \n", elem->path);
-		elem = elem->next;
-	}
+	ft_putstr(path);
+	ft_putendl(":");
+	ft_putstr("ft_ls: ");
+	path = ft_strrchr(path, '/');
+	ft_putstr(path + 1);
+	ft_putstr(": ");
+	ft_putendl(strerror(ernb));
 	ft_putchar('\n');
-}
-
-void	display_queue(t_queue *queue)
-{
-	t_queue *elem;
-
-	elem = queue;
-	while (elem)
-	{
-		printf("queue->%s\n", elem->path);
-		elem = elem->next;
-	}
 }
