@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 03:14:23 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 09:00:54 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/25 09:23:31 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ void	ft_error(int ernb, char *path)
 	ft_putstr_fd(path, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(strerror(ernb), 2);
-	ft_putchar_fd('\n', 2);
 }
