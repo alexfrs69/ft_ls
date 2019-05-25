@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 03:36:58 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/25 08:48:02 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,20 @@ int				options_recursive(t_queue *queue, int opts)
 	t_stat		stat;
 
 	tmp = queue;
+	ft_mergesort_tqueue(&queue);
 	newqueue = NULL;
 	start = NULL;
 	while (queue)
 	{
 		lstat(queue->path, &stat);
-		if ((stat.st_mode & S_IFDIR))
+		if ((stat.st_mode & S_IFDIR) || (stat.st_mode & S_IFLNK))
 		{
 			if (!(start = save_dir(queue->path, &newqueue, opts)))
 				ft_error(errno, queue->path);
 		}
 		else
 			start = init_node(start, NULL, queue->path);
+		ft_mergesort_tfile(&start);
 		display_list(start, queue->path);
 		list_del(&start);
 		queue = queue->next;

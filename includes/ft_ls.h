@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 03:20:45 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/25 08:49:39 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,11 @@ int						options_recursive(t_queue *queue, int listoptions);
 ** Error
 */
 void					ft_error(int errnb, char *path);
+
+
+/*
+** Sorting functions
+*/
+void					ft_mergesort_tfile(t_file **start);
+void					ft_mergesort_tqueue(t_queue **start);
 #endif
