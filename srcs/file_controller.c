@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 09:23:09 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/26 02:46:05 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		save_file(char *path, int listopt)
 		if (!(listopt & OPT_A))
 			if (dirent->d_name[0] == '.')
 				continue ;
-		start = init_node(start, dirent, path);
+		start = init_node(start, dirent, NULL, path);
 	}
 	closedir(dir);
 	ft_mergesort_tfile(&start);

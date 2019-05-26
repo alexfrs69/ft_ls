@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 09:05:58 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/26 02:54:17 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static t_file	*save_dir(char *path, t_queue **newqueue, int opts)
 	t_dirent	*dirent;
 	t_file		*start;
 	char		*tmp;
+	t_stat		stat;
 
 	start = NULL;
 	if ((dir = opendir(path)))
@@ -52,14 +53,15 @@ static t_file	*save_dir(char *path, t_queue **newqueue, int opts)
 		{
 			if (!check(dirent->d_name, opts))
 				continue ;
-			if (dirent->d_type & DT_DIR)
-			{
-				if (!(tmp = join_path(path, dirent->d_name)))
+			if (!(tmp = join_path(path, dirent->d_name)))
 					continue ;
+			lstat(tmp, &stat);
+			if (S_ISDIR(stat.st_mode) || S_ISLNK(stat.st_mode))
+			{
 				*newqueue = init_queue(*newqueue, tmp);
 				ft_strdel(&tmp);
 			}
-			start = init_node(start, dirent, path);
+			start = init_node(start, dirent, &stat, path);
 		}
 		closedir(dir);
 		return (start);
@@ -87,7 +89,7 @@ int				options_recursive(t_queue *queue, int opts)
 				ft_error(errno, queue->path);
 		}
 		else
-			start = init_node(start, NULL, queue->path);
+			start = init_node(start, NULL, &stat, queue->path);
 		ft_mergesort_tfile(&start);
 		display_list(start, queue->path);
 		list_del(&start);
