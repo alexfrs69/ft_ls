@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_tfile.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 06:43:47 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 08:53:36 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/28 15:53:25 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		split_list(t_file *start, t_file **a, t_file **b)
 	slow->next = NULL;
 }
 
-static t_file	*sortedmerge(t_file *a, t_file *b)
+static t_file	*sortedmerge(t_file *a, t_file *b, int (*cmp)(t_file *a, t_file *b))
 {
 	t_file *res;
 
@@ -43,20 +43,20 @@ static t_file	*sortedmerge(t_file *a, t_file *b)
 		return (b);
 	else if (!b)
 		return (a);
-	if (ft_strcmp(a->name, b->name) <= 0)
+	if (cmp(a, b))
 	{
 		res = a;
-		res->next = sortedmerge(a->next, b);
+		res->next = sortedmerge(a->next, b, cmp);
 	}
 	else
 	{
 		res = b;
-		res->next = sortedmerge(a, b->next);
+		res->next = sortedmerge(a, b->next, cmp);
 	}
 	return (res);
 }
 
-void			ft_mergesort_tfile(t_file **start)
+void			ft_mergesort_tfile(t_file **start, int opts)
 {
 	t_file *a;
 	t_file *b;
@@ -66,7 +66,12 @@ void			ft_mergesort_tfile(t_file **start)
 	if (!head || !head->next)
 		return ;
 	split_list(head, &a, &b);
-	ft_mergesort_tfile(&a);
-	ft_mergesort_tfile(&b);
-	*start = sortedmerge(a, b);
+	ft_mergesort_tfile(&a, opts);
+	ft_mergesort_tfile(&b, opts);
+	if (opts & OPT_T)
+	{
+		*start = sortedmerge(a, b, &check_time);
+	}
+	else
+		*start = sortedmerge(a, b, &check_strcmp);
 }

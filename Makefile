@@ -18,6 +18,7 @@ SRCS = 	srcs/main.c					\
 		srcs/error.c				\
 		srcs/sort_tfile.c			\
 		srcs/sort_tqueue.c			\
+		srcs/sort_utils.c			\
 
 OBJS_PATH = objs/
 OBJS = $(patsubst srcs/%.c,$(OBJS_PATH)%.o, $(SRCS))

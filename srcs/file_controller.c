@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_controller.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/26 02:46:05 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/28 15:47:03 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		save_file(char *path, int listopt)
 		start = init_node(start, dirent, NULL, path);
 	}
 	closedir(dir);
-	ft_mergesort_tfile(&start);
+	ft_mergesort_tfile(&start, listopt);
 	display_list(start, path);
 	list_del(&start);
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_recursive.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/26 02:54:17 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/28 15:47:18 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int				options_recursive(t_queue *queue, int opts)
 		}
 		else
 			start = init_node(start, NULL, &stat, queue->path);
-		ft_mergesort_tfile(&start);
+		ft_mergesort_tfile(&start, opts);
 		display_list(start, queue->path);
 		list_del(&start);
 		queue = queue->next;

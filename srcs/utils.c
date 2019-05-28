@@ -12,12 +12,12 @@
 
 #include "ft_ls.h"
 
-t_file	*init_node(t_file *start, t_dirent *dirent, char *path)
+t_file	*init_node(t_file *start, t_dirent *dirent, t_stat *stat, char *path)
 {
 	if (start)
-		add_node(start, dirent, path);
+		add_node(start, dirent, stat, path);
 	else
-		start = add_node(NULL, dirent, path);
+		start = add_node(NULL, dirent, stat, path);
 	return (start);
 }
 
