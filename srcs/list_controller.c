@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_controller.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:01:24 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/26 02:44:32 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/30 12:09:17 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,12 @@ int		fill_node(t_file *elem, t_dirent *dirent, t_stat *stat, char *path)
 	}
 	ft_strcpy(elem->path, tmp);
 	if (dirent)
+	{
+		stat_wrapper(elem, stat, tmp);
 		free(tmp);
-	stat_wrapper(elem, stat, path);
+	}
+	else
+		stat_wrapper(elem, stat, path);
 	return (1);
 }
 

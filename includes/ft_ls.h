@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/26 02:46:30 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/05/30 12:53:45 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define OPT_G 2
 # define OPT_L 4
 # define OPT_R 8
+# define OPT_T 16
+# define OPT_RR 32
 
 # include <dirent.h>
 # include <sys/stat.h>
@@ -46,6 +48,8 @@ typedef struct			s_queue {
 	char				path[PATH_MAX + 1];
 	struct s_queue		*next;
 }						t_queue;
+
+typedef int (*t_cmp)(t_file*, t_file*);
 
 /*
 ** File struct system
@@ -94,6 +98,8 @@ void					ft_error(int errnb, char *path);
 /*
 ** Sorting functions
 */
-void					ft_mergesort_tfile(t_file **start);
+void					ft_mergesort_tfile(t_file **start, int opts);
 void					ft_mergesort_tqueue(t_queue **start);
+int						check_strcmp(t_file *a, t_file *b);
+int						check_time(t_file *a, t_file *b);
 #endif

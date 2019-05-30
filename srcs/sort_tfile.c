@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 06:43:47 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/28 15:53:25 by root             ###   ########.fr       */
+/*   Updated: 2019/05/30 12:48:12 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		split_list(t_file *start, t_file **a, t_file **b)
 	slow->next = NULL;
 }
 
-static t_file	*sortedmerge(t_file *a, t_file *b, int (*cmp)(t_file *a, t_file *b))
+static t_file	*sortedmerge(t_file *a, t_file *b, t_cmp cmp)
 {
 	t_file *res;
 
@@ -56,6 +56,14 @@ static t_file	*sortedmerge(t_file *a, t_file *b, int (*cmp)(t_file *a, t_file *b
 	return (res);
 }
 
+static t_cmp ft_getcmp(int opts)
+{
+	if (opts & OPT_T)
+		return (&check_time);
+	else
+		return (&check_strcmp);
+}
+
 void			ft_mergesort_tfile(t_file **start, int opts)
 {
 	t_file *a;
@@ -68,10 +76,5 @@ void			ft_mergesort_tfile(t_file **start, int opts)
 	split_list(head, &a, &b);
 	ft_mergesort_tfile(&a, opts);
 	ft_mergesort_tfile(&b, opts);
-	if (opts & OPT_T)
-	{
-		*start = sortedmerge(a, b, &check_time);
-	}
-	else
-		*start = sortedmerge(a, b, &check_strcmp);
+	*start = sortedmerge(a, b, *ft_getcmp(opts));
 }
