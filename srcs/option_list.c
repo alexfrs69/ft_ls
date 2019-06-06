@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 22:43:36 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/06 23:26:13 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/06 23:29:31 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ void		display_opt_l(t_file *list, char *path, int opts)
 	{
 		perm(cur);
 		userngroup(cur);
+		ft_putchar('\n');
+		cur = cur->next;
 	}
 }
