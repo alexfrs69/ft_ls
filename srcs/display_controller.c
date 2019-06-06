@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/06 20:13:37 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/06 22:43:48 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	display_list(t_file *start, char *path, int opts)
 	if (!start)
 		return ;
 	elem = start;
+	if (opts & OPT_L)
+		return (display_opt_l(start, path, opts));
 	if ((opts & OPTS || opts & OPT_R) && start->infodir)
 		printf("%s:\n", path);
 	while (elem)

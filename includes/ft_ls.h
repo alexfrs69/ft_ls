@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/06 20:04:55 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/06 23:27:13 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char					*join_path(char *path, char *name);
 ** Options
 */
 int						options_recursive(t_file *queue, int listoptions);
+void					display_opt_l(t_file *list, char *path, int opts);
 
 /*
 ** Error

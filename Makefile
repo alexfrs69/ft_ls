@@ -10,13 +10,14 @@ SRCS = 	srcs/main.c					\
 		srcs/file_controller.c		\
 		srcs/list_controller.c		\
 		srcs/display_controller.c	\
-		srcs/options_recursive.c	\
+		srcs/option_recursive.c	\
 		srcs/router.c				\
 		srcs/parser.c				\
 		srcs/utils.c				\
 		srcs/error.c				\
 		srcs/sort.c					\
 		srcs/sort_utils.c			\
+		srcs/option_list.c			\
 
 OBJS_PATH = objs/
 OBJS = $(patsubst srcs/%.c,$(OBJS_PATH)%.o, $(SRCS))
