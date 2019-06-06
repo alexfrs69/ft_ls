@@ -11,13 +11,11 @@ SRCS = 	srcs/main.c					\
 		srcs/list_controller.c		\
 		srcs/display_controller.c	\
 		srcs/options_recursive.c	\
-		srcs/queue_controller.c		\
 		srcs/router.c				\
 		srcs/parser.c				\
 		srcs/utils.c				\
 		srcs/error.c				\
-		srcs/sort_tfile.c			\
-		srcs/sort_tqueue.c			\
+		srcs/sort.c					\
 		srcs/sort_utils.c			\
 
 OBJS_PATH = objs/

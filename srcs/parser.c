@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 16:20:40 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/28 15:46:33 by root             ###   ########.fr       */
+/*   Updated: 2019/06/06 20:06:10 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static int		cacl_offset_opt(char **argv, int aci, int avi, int *listoptions)
 {
 	int			indexpow;
-	static char	*str = "aGlRt";
+	static char	*str = "aGlRtr";
 
 	if (argv[aci][avi] && ft_strchr(str, argv[aci][avi]))
 	{
@@ -55,5 +55,7 @@ int				parse_args(int argc, char **argv, int *decal)
 		}
 		aci++;
 	}
+	if((argc - *decal) > 2)
+		listoptions += OPTS;
 	return (listoptions);
 }

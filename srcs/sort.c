@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_tqueue.c                                      :+:      :+:    :+:   */
+/*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/25 08:40:13 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 08:52:33 by afrancoi         ###   ########.fr       */
+/*   Created: 2019/05/25 06:43:47 by afrancoi          #+#    #+#             */
+/*   Updated: 2019/06/03 18:28:13 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "libft.h"
 
-static void		split_list(t_queue *start, t_queue **a, t_queue **b)
+static void		split_list(t_file *start, t_file **a, t_file **b)
 {
-	t_queue *slow;
-	t_queue *fast;
+	t_file *slow;
+	t_file *fast;
 
 	slow = start;
 	fast = start->next;
@@ -34,39 +34,39 @@ static void		split_list(t_queue *start, t_queue **a, t_queue **b)
 	slow->next = NULL;
 }
 
-static t_queue	*sortedmerge(t_queue *a, t_queue *b)
+static t_file	*sortedmerge(t_file *a, t_file *b, t_cmp cmp)
 {
-	t_queue *result;
+	t_file *res;
 
-	result = NULL;
+	res = NULL;
 	if (!a)
 		return (b);
 	else if (!b)
 		return (a);
-	if (ft_strcmp(a->path, b->path) <= 0)
+	if (cmp(a, b))
 	{
-		result = a;
-		result->next = sortedmerge(a->next, b);
+		res = a;
+		res->next = sortedmerge(a->next, b, cmp);
 	}
 	else
 	{
-		result = b;
-		result->next = sortedmerge(a, b->next);
+		res = b;
+		res->next = sortedmerge(a, b->next, cmp);
 	}
-	return (result);
+	return (res);
 }
 
-void		ft_mergesort_tqueue(t_queue **start)
+void			ft_mergesort(t_file **start, int opts)
 {
-	t_queue *a;
-	t_queue *b;
-	t_queue *head;
+	t_file *a;
+	t_file *b;
+	t_file *head;
 
 	head = *start;
 	if (!head || !head->next)
 		return ;
 	split_list(head, &a, &b);
-	ft_mergesort_tqueue(&a);
-	ft_mergesort_tqueue(&b);
-	*start = sortedmerge(a, b);
+	ft_mergesort(&a, opts);
+	ft_mergesort(&b, opts);
+	*start = sortedmerge(a, b, *ft_getcmp(opts));
 }

@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:13:08 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 01:27:55 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/05 14:21:39 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,25 @@ static void	ft_kickstart(int argc, char **argv)
 	int		i;
 	int		listopt;
 	int		decal;
-	t_queue	*queue;
 	t_stat	stat;
+	t_file	*list;
 
 	decal = 0;
-	queue = NULL;
 	listopt = parse_args(argc, argv, &decal);
+	list = NULL;
 	if ((argc - decal) == 1)
-		route_to(queue_add(NULL, "."), listopt);
+		save_dir(".", listopt);
 	else
 	{
 		i = (decal ? decal : 0);
 		while (++i < argc)
 		{
 			if (!lstat(argv[i], &stat))
-				queue = init_queue(queue, argv[i]);
+				list = init_node(list, NULL, &stat, argv[i]);
 			else
-				printf("ft_ls: %s no such file or directory\n", argv[i]);
+				printf("ft_ls: %s: no such file or directory\n", argv[i]);
 		}
-		route_to(queue, listopt);
+		route_to(list, listopt);
 	}
 }
 

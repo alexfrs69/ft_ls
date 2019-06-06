@@ -6,45 +6,44 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 09:13:02 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/06 20:13:37 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_ls.h"
 
-void	display_list(t_file *start, char *path)
+void	display_list(t_file *start, char *path, int opts)
 {
 	t_file *elem;
 
 	if (!start)
 		return ;
 	elem = start;
-	if (elem->infodir && !ft_strequ(path, "."))
+	if ((opts & OPTS || opts & OPT_R) && start->infodir)
 		printf("%s:\n", path);
 	while (elem)
 	{
-		if (ft_strequ(path, "."))
-		{
-			if(elem->next)
-				printf("%10s", elem->name);
-			else
-				printf("%10s\n", elem->name);
-		}
-		else
-			printf("	%s\n", elem->name);
+		printf("%s\n", elem->name);
 		elem = elem->next;
 	}
 }
 
-void	display_queue(t_queue *queue)
+void	display_file(t_file *list)
 {
-	t_queue *elem;
+	t_file *elem;
 
-	elem = queue;
+	if(!list)
+		return ;
+	elem = list;
 	while (elem)
 	{
-		printf("queue->%s\n", elem->path);
+		if (!(S_ISDIR(elem->stat.st_mode)))
+		{
+			printf("%s\n", elem->name);
+			if (elem->next)
+				ft_putchar('\n');
+		}
 		elem = elem->next;
 	}
 }

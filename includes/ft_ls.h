@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/30 12:53:45 by root             ###   ########.fr       */
+/*   Updated: 2019/06/06 20:04:55 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 ** Args options
 */
 
-# define OPT_A 1
-# define OPT_G 2
-# define OPT_L 4
-# define OPT_R 8
-# define OPT_T 16
-# define OPT_RR 32
+# define OPT_A		1
+# define OPT_G		2
+# define OPT_L		4
+# define OPT_R		8
+# define OPT_T		16
+# define OPT_REV	32
+# define OPTS		64
 
 # include <dirent.h>
 # include <sys/stat.h>
@@ -44,11 +45,6 @@ typedef struct			s_file {
 	struct s_file		*next;
 }						t_file;
 
-typedef struct			s_queue {
-	char				path[PATH_MAX + 1];
-	struct s_queue		*next;
-}						t_queue;
-
 typedef int (*t_cmp)(t_file*, t_file*);
 
 /*
@@ -58,20 +54,12 @@ typedef int (*t_cmp)(t_file*, t_file*);
 t_file					*add_node(t_file *start, t_dirent *dirent, t_stat *stat, char *path);
 t_file					*init_node(t_file *start, t_dirent *dirent, t_stat *stat, char *path);
 void					list_del(t_file **start);
-void					display_list(t_file *start, char *path);
+void					display_list(t_file *start, char *path, int opts);
+void					display_file(t_file *list);
 int						fill_node(t_file *elem, t_dirent *dirent, t_stat *stat, char *path);
-int						save_file(char *path, int listoptions);
+int						save_dir(char *path, int listoptions);
+void					save_list_dir(t_file *list, int listopts);
 
-/*
-** Queue struct system
-*/
-void					queue_file(t_queue *queue, int listopt);
-void					queue_fill(t_queue *elem, char *path);
-t_queue					*get_queue_node(void);
-t_queue					*queue_add(t_queue *start, char *path);
-t_queue					*init_queue(t_queue *start, char *path);
-void					queue_del(t_queue **start);
-void					display_queue(t_queue *queue);
 
 /*
 ** Parser
@@ -81,13 +69,13 @@ int						parse_args(int argc, char **argv, int *decal);
 /*
 ** Router system
 */
-void					route_to(t_queue *queu, int listopt);
+void					route_to(t_file *list, int listopt);
 char					*join_path(char *path, char *name);
 
 /*
 ** Options
 */
-int						options_recursive(t_queue *queue, int listoptions);
+int						options_recursive(t_file *queue, int listoptions);
 
 /*
 ** Error
@@ -98,8 +86,8 @@ void					ft_error(int errnb, char *path);
 /*
 ** Sorting functions
 */
-void					ft_mergesort_tfile(t_file **start, int opts);
-void					ft_mergesort_tqueue(t_queue **start);
+void					ft_mergesort(t_file **start, int opts);
 int						check_strcmp(t_file *a, t_file *b);
 int						check_time(t_file *a, t_file *b);
+t_cmp					ft_getcmp(int opts);
 #endif

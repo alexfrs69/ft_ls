@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_recursive.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/28 15:47:18 by root             ###   ########.fr       */
+/*   Updated: 2019/06/06 20:03:09 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int		check(char *name, int opts)
 	return (1);
 }
 
-static t_file	*save_dir(char *path, t_queue **newqueue, int opts)
+static t_file	*save_recur_dir(char *path, t_file **new, int opts)
 {
 	DIR			*dir;
 	t_dirent	*dirent;
@@ -58,7 +58,7 @@ static t_file	*save_dir(char *path, t_queue **newqueue, int opts)
 			lstat(tmp, &stat);
 			if (S_ISDIR(stat.st_mode) || S_ISLNK(stat.st_mode))
 			{
-				*newqueue = init_queue(*newqueue, tmp);
+				*new = init_node(*new, dirent, &stat, path);
 				ft_strdel(&tmp);
 			}
 			start = init_node(start, dirent, &stat, path);
@@ -69,34 +69,33 @@ static t_file	*save_dir(char *path, t_queue **newqueue, int opts)
 	return (NULL);
 }
 
-int				options_recursive(t_queue *queue, int opts)
+int				options_recursive(t_file *list, int opts)
 {
-	t_queue		*newqueue;
-	t_file		*start;
-	t_queue		*tmp;
-	t_stat		stat;
+	t_file		*new;
+	t_file		*tmp;
+	t_file		*dir;
 
-	tmp = queue;
-	ft_mergesort_tqueue(&queue);
-	newqueue = NULL;
-	start = NULL;
-	while (queue)
+	dir = NULL;
+	new = NULL;
+	ft_mergesort(&list, opts);
+	tmp = list;
+	display_file(list);
+	while (list)
 	{
-		lstat(queue->path, &stat);
-		if ((S_ISDIR(stat.st_mode)) || (S_ISLNK(stat.st_mode)))
+		if ((S_ISDIR(list->stat.st_mode)) || (S_ISLNK(list->stat.st_mode)))
 		{
-			if (!(start = save_dir(queue->path, &newqueue, opts)))
-				ft_error(errno, queue->path);
+			if (!(dir = save_recur_dir(list->path, &new, opts)))
+				ft_error(errno, list->path);
 		}
-		else
-			start = init_node(start, NULL, &stat, queue->path);
-		ft_mergesort_tfile(&start, opts);
-		display_list(start, queue->path);
-		list_del(&start);
-		queue = queue->next;
+		ft_mergesort(&dir, opts);
+		display_list(dir, list->path, opts);
+		list_del(&dir);
+		if (list->next)
+			ft_putchar('\n');
+		list = list->next;
 	}
-	queue_del(&tmp);
-	if (newqueue)
-		options_recursive(newqueue, opts);
+	list_del(&tmp);
+	if (new)
+		options_recursive(new, opts);
 	return (1);
 }

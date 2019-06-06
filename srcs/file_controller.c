@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_controller.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/28 15:47:03 by root             ###   ########.fr       */
+/*   Updated: 2019/06/05 14:44:50 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_ls.h"
 #include <errno.h>
 
-int		save_file(char *path, int listopt)
+int		save_dir(char *path, int listopt)
 {
 	DIR				*dir;
 	t_dirent		*dirent;
@@ -34,22 +34,24 @@ int		save_file(char *path, int listopt)
 		start = init_node(start, dirent, NULL, path);
 	}
 	closedir(dir);
-	ft_mergesort_tfile(&start, listopt);
-	display_list(start, path);
+	ft_mergesort(&start, listopt);
+	display_list(start, path, listopt);
 	list_del(&start);
 	return (1);
 }
 
-void	queue_file(t_queue *queue, int listopt)
+void	save_list_dir(t_file *list, int listopts)
 {
-	t_queue			*tmp;
+	t_file *cur;
 
-	tmp = queue;
-	ft_mergesort_tqueue(&tmp);
-	while (tmp)
+	cur = list;
+	ft_mergesort(&cur, listopts);
+	display_file(cur);
+	while (cur)
 	{
-		save_file(tmp->path, listopt);
-		tmp = tmp->next;
+		if ((S_ISDIR(cur->stat.st_mode)))
+			save_dir(cur->path, listopts);
+		cur = cur->next;
 	}
-	queue_del(&queue);
+	list_del(&list);
 }

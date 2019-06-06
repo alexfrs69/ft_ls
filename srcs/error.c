@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 03:14:23 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/25 11:00:58 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/06 20:13:43 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_error(int ernb, char *path)
 {
 	char *tmp;
 
-	if((tmp = ft_strrchr(path, '/')))
+	if ((tmp = ft_strrchr(path, '/')))
 		tmp++;
 	else
 		tmp = path;
