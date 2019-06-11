@@ -6,7 +6,11 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 22:43:36 by afrancoi          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/06/11 03:16:40 by afrancoi         ###   ########.fr       */
+=======
+/*   Updated: 2019/06/07 16:29:44 by afrancoi         ###   ########.fr       */
+>>>>>>> 96716d9dcb93cec518a2eb5f38a5371001d88cf9
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +19,11 @@
 #include <pwd.h>
 #include <grp.h>
 #include <time.h>
+<<<<<<< HEAD
 #include <errno.h>
 #include <unistd.h>
+=======
+>>>>>>> 96716d9dcb93cec518a2eb5f38a5371001d88cf9
 
 static void	ft_time(t_file *cur)
 {
@@ -112,6 +119,7 @@ static void ft_typenperm(t_file *elem)
 
 }
 
+<<<<<<< HEAD
 void	display_l_wrapper(t_file *elem)
 {
 	char	buf[PATH_MAX];
@@ -125,6 +133,30 @@ void	display_l_wrapper(t_file *elem)
 		ft_putstr(elem->path);
 		ft_putstr(" -> ");
 		ft_putendl(buf);
+=======
+
+void		display_opt_l(t_file *list, char *path, int opts)
+{
+	t_file	*cur;
+	char	*t;
+
+	cur = list;
+	if ((opts & OPTS || opts & OPT_R) && list->infodir)
+		printf("%s:\n", path);
+	while (cur)
+	{
+		perm(cur);
+		userngroup(cur);
+		ft_putnbr(cur->stat.st_size);
+		ft_putchar(' ');
+		t = ctime(&cur->stat.st_ctime);
+		t[ft_strlen(t) - 1] == '\n' ? t[ft_strlen(t) - 1] = '\0': 0;
+		ft_putstr(t);
+		ft_putchar(' ');
+		ft_putstr(cur->name);
+		ft_putchar('\n');
+		cur = cur->next;
+>>>>>>> 96716d9dcb93cec518a2eb5f38a5371001d88cf9
 	}
 	else
 		ft_putendl(elem->name);
