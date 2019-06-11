@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 22:43:36 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/11 03:07:14 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/11 03:16:40 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	ft_time(t_file *cur)
 	sixmonth = 15552000;
 	str = ctime(&cur->stat.st_mtime);
 	now = time(NULL);
-	if((now < mtime) || ((now - mtime) > sixmonth))
+	if ((now < mtime) || ((now - mtime) > sixmonth))
 	{
 		str[11] = '\0';
 		str[24] = '\0';
@@ -50,17 +50,24 @@ static void	ft_userngroup(t_file *elem)
 	struct passwd	*pwd;
 	struct group	*grp;
 
-	if(!(pwd = getpwuid(elem->stat.st_uid)))
+	if (!(pwd = getpwuid(elem->stat.st_uid)))
 		ft_putnbr(elem->stat.st_uid);
 	else
 		ft_putstr(pwd->pw_name);
 	ft_putchar(' ');
-	if(!(grp = getgrgid(elem->stat.st_gid)))
+	if (!(grp = getgrgid(elem->stat.st_gid)))
 		ft_putnbr(elem->stat.st_gid);
 	else
 		ft_putstr(grp->gr_name);
 	ft_putchar(' ');
-	ft_putnbr(elem->stat.st_size);
+	if ((S_ISCHR(elem->stat.st_mode)) || (S_ISBLK(elem->stat.st_mode)))
+	{
+		ft_putnbr(major(elem->stat.st_rdev));
+		ft_putstr(", ");
+		ft_putnbr(minor(elem->stat.st_rdev));
+	}
+	else
+		ft_putnbr(elem->stat.st_size);
 	ft_time(elem);
 }
 
@@ -87,7 +94,7 @@ static void ft_typenperm(t_file *elem)
 	mode_t type;
 
 	type = elem->stat.st_mode;
-	if(S_ISDIR(type))
+	if (S_ISDIR(type))
 		ft_putchar('d');
 	else if (S_ISREG(type))
 		ft_putchar('-');
@@ -110,9 +117,9 @@ void	display_l_wrapper(t_file *elem)
 	char	buf[PATH_MAX];
 	ssize_t	n;
 	ft_typenperm(elem);
-	if(S_ISLNK(elem->stat.st_mode))
+	if (S_ISLNK(elem->stat.st_mode))
 	{
-		if(!(n = readlink(elem->path, buf, PATH_MAX)))
+		if (!(n = readlink(elem->path, buf, PATH_MAX)))
 			ft_error(errno, elem->path);
 		buf[n] = '\0';
 		ft_putstr(elem->path);

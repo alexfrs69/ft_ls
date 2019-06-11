@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/10 21:26:16 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/11 03:17:02 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	save_list_dir(t_file *list, int listopts)
 
 	cur = list;
 	ft_mergesort(&cur, listopts);
-	display_file(cur);
+	display_file(cur, listopts);
 	while (cur)
 	{
 		if ((S_ISDIR(cur->stat.st_mode)))

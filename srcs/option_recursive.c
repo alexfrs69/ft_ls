@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   options_recursive.c                                :+:      :+:    :+:   */
+/*   option_recursive.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/06 20:03:09 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/11 03:50:54 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,27 @@ int				options_recursive(t_file *list, int opts)
 	new = NULL;
 	ft_mergesort(&list, opts);
 	tmp = list;
-	display_file(list);
+	display_file(list, opts);
 	while (list)
 	{
-		if ((S_ISDIR(list->stat.st_mode)) || (S_ISLNK(list->stat.st_mode)))
+		if	((S_ISDIR(list->stat.st_mode)))
 		{
 			if (!(dir = save_recur_dir(list->path, &new, opts)))
+			{
 				ft_error(errno, list->path);
+				if ((list = list->next))
+					ft_putchar('\n');
+				continue ;
+			}
 		}
 		ft_mergesort(&dir, opts);
 		display_list(dir, list->path, opts);
 		list_del(&dir);
-		if (list->next)
+		if (new)
+			options_recursive(new, opts);
+		if ((list = list->next))
 			ft_putchar('\n');
-		list = list->next;
 	}
-	list_del(&tmp);
-	if (new)
-		options_recursive(new, opts);
+	//list_del(&tmp);
 	return (1);
 }
