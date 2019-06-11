@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 16:20:40 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/06 20:06:10 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/08 20:22:20 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,19 @@ int				parse_args(int argc, char **argv, int *decal)
 		avi = 0;
 		while (argv[aci][avi])
 		{
-			if (argv[aci][avi] == '-' && argv[aci][avi + 1])
+			if (argv[aci][avi] == '-' && argv[aci][avi + 1] != '-')
 			{
 				while (argv[aci][++avi])
 					if (!cacl_offset_opt(argv, aci, avi, &listoptions))
 						exit(1);
-				*decal += 1;
+				++*decal;
 			}
 			else
+			{
+				if (argv[aci][avi + 1] == '-')
+					++*decal;
 				break ;
+			}
 		}
 		aci++;
 	}

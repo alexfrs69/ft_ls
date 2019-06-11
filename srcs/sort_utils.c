@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 06:43:47 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/06 22:40:03 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/10 21:31:35 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ int		check_time(t_file *a, t_file *b)
 	long int	bsec;
 	int			ret;
 
-	asec = a->stat.st_mtim.tv_sec;
-	bsec = b->stat.st_mtim.tv_sec;
+	asec = a->stat.st_mtimespec.tv_sec;
+	bsec = b->stat.st_mtimespec.tv_sec;
 	if (asec > bsec)
 		ret = 1;
 	else if (asec == bsec)
 	{
-		if (a->stat.st_mtim.tv_nsec >= b->stat.st_mtim.tv_nsec)
+		printf("a->%ld | b->%ld\n", (long)a->stat.st_mtimespec.tv_nsec, (long)b->stat.st_mtimespec.tv_nsec);
+		if (a->stat.st_mtimespec.tv_nsec >= b->stat.st_mtimespec.tv_nsec)
 			ret = 1;
 		else
 			ret = 0;
@@ -41,13 +42,13 @@ int		reverse_time(t_file *a, t_file *b)
 	long int	bsec;
 	int			ret;
 
-	asec = a->stat.st_mtim.tv_sec;
-	bsec = b->stat.st_mtim.tv_sec;
+	asec = a->stat.st_mtimespec.tv_sec;
+	bsec = b->stat.st_mtimespec.tv_sec;
 	if (asec < bsec)
 		ret = 1;
 	else if (asec == bsec)
 	{
-		if (a->stat.st_mtim.tv_nsec <= b->stat.st_mtim.tv_nsec)
+		if (a->stat.st_mtimespec.tv_nsec <= b->stat.st_mtimespec.tv_nsec)
 			ret = 1;
 		else
 			ret = 0;
@@ -59,12 +60,12 @@ int		reverse_time(t_file *a, t_file *b)
 
 int		check_strcmp(t_file *a, t_file *b)
 {
-	return (ft_strcasecmp(a->name, b->name) <= 0);
+	return (ft_strcmp(a->name, b->name) <= 0);
 }
 
 int		reverse_cmp(t_file *a, t_file *b)
 {
-	return (ft_strcasecmp(a->name, b->name) >= 0);
+	return (ft_strcmp(a->name, b->name) >= 0);
 }
 
 t_cmp ft_getcmp(int opts)
