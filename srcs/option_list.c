@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 22:43:36 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/14 05:36:00 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/14 06:09:28 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <time.h>
 #include <errno.h>
 #include <unistd.h>
+#include <sys/xattr.h>
 
 static void		ft_time(t_file *cur)
 {
@@ -75,13 +76,24 @@ static void		ft_perm(t_file *elem)
 {
 	ft_putchar((elem->stat.st_mode & S_IRUSR) ? 'r' : '-');
 	ft_putchar((elem->stat.st_mode & S_IWUSR) ? 'w' : '-');
-	ft_putchar((elem->stat.st_mode & S_IXUSR) ? 'x' : '-');
+	if (elem->stat.st_mode & S_ISUID)
+		ft_putchar((elem->stat.st_mode & S_IXUSR) ? 's' : 'S');
+	else
+		ft_putchar((elem->stat.st_mode & S_IXUSR) ? 'x' : '-');
 	ft_putchar((elem->stat.st_mode & S_IRGRP) ? 'r' : '-');
 	ft_putchar((elem->stat.st_mode & S_IWGRP) ? 'w' : '-');
-	ft_putchar((elem->stat.st_mode & S_IXGRP) ? 'x' : '-');
+	if (elem->stat.st_mode & S_ISGID)
+		ft_putchar((elem->stat.st_mode & S_IXGRP) ? 's' : 'S');
+	else
+		ft_putchar((elem->stat.st_mode & S_IXGRP) ? 'x' : '-');
 	ft_putchar((elem->stat.st_mode & S_IROTH) ? 'r' : '-');
 	ft_putchar((elem->stat.st_mode & S_IWOTH) ? 'w' : '-');
-	ft_putchar((elem->stat.st_mode & S_IXOTH) ? 'x' : '-');
+	if (elem->stat.st_mode & S_ISVTX)
+		ft_putchar((elem->stat.st_mode & S_IXOTH) ? 't' : 'T');
+	else
+		ft_putchar((elem->stat.st_mode & S_IXOTH) ? 'x' : '-');
+	if (listxattr(elem->path, NULL, 0, XATTR_NOFOLLOW) > 0)
+		ft_putchar('@');
 	ft_putchar(' ');
 	ft_putnbr(elem->stat.st_nlink);
 	ft_putchar(' ');
