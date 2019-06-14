@@ -6,11 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 22:43:36 by afrancoi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/06/11 03:16:40 by afrancoi         ###   ########.fr       */
-=======
-/*   Updated: 2019/06/07 16:29:44 by afrancoi         ###   ########.fr       */
->>>>>>> 96716d9dcb93cec518a2eb5f38a5371001d88cf9
+/*   Updated: 2019/06/14 05:36:00 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +15,10 @@
 #include <pwd.h>
 #include <grp.h>
 #include <time.h>
-<<<<<<< HEAD
 #include <errno.h>
 #include <unistd.h>
-=======
->>>>>>> 96716d9dcb93cec518a2eb5f38a5371001d88cf9
 
-static void	ft_time(t_file *cur)
+static void		ft_time(t_file *cur)
 {
 	char	*str;
 	time_t	sixmonth;
@@ -52,7 +45,7 @@ static void	ft_time(t_file *cur)
 	ft_putchar(' ');
 }
 
-static void	ft_userngroup(t_file *elem)
+static void		ft_userngroup(t_file *elem)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
@@ -78,7 +71,7 @@ static void	ft_userngroup(t_file *elem)
 	ft_time(elem);
 }
 
-static void	ft_perm(t_file *elem)
+static void		ft_perm(t_file *elem)
 {
 	ft_putchar((elem->stat.st_mode & S_IRUSR) ? 'r' : '-');
 	ft_putchar((elem->stat.st_mode & S_IWUSR) ? 'w' : '-');
@@ -95,8 +88,7 @@ static void	ft_perm(t_file *elem)
 	ft_userngroup(elem);
 }
 
-
-static void ft_typenperm(t_file *elem)
+static void		ft_typenperm(t_file *elem)
 {
 	mode_t type;
 
@@ -116,49 +108,26 @@ static void ft_typenperm(t_file *elem)
 	else if (S_ISFIFO(type))
 		ft_putchar('p');
 	ft_perm(elem);
-
 }
 
-<<<<<<< HEAD
-void	display_l_wrapper(t_file *elem)
+void			display_l_wrapper(t_file *elem)
 {
-	char	buf[PATH_MAX];
+	char	buf[PATH_MAX + 1];
 	ssize_t	n;
+
 	ft_typenperm(elem);
 	if (S_ISLNK(elem->stat.st_mode))
 	{
-		if (!(n = readlink(elem->path, buf, PATH_MAX)))
+		if ((n = readlink(elem->path, buf, PATH_MAX)) != -1)
+		{
+			buf[n] = '\0';
+			ft_putstr(elem->path);
+			ft_putstr(" -> ");
+			ft_putendl(buf);
+		}
+		else
 			ft_error(errno, elem->path);
-		buf[n] = '\0';
-		ft_putstr(elem->path);
-		ft_putstr(" -> ");
-		ft_putendl(buf);
-=======
-
-void		display_opt_l(t_file *list, char *path, int opts)
-{
-	t_file	*cur;
-	char	*t;
-
-	cur = list;
-	if ((opts & OPTS || opts & OPT_R) && list->infodir)
-		printf("%s:\n", path);
-	while (cur)
-	{
-		perm(cur);
-		userngroup(cur);
-		ft_putnbr(cur->stat.st_size);
-		ft_putchar(' ');
-		t = ctime(&cur->stat.st_ctime);
-		t[ft_strlen(t) - 1] == '\n' ? t[ft_strlen(t) - 1] = '\0': 0;
-		ft_putstr(t);
-		ft_putchar(' ');
-		ft_putstr(cur->name);
-		ft_putchar('\n');
-		cur = cur->next;
->>>>>>> 96716d9dcb93cec518a2eb5f38a5371001d88cf9
 	}
 	else
 		ft_putendl(elem->name);
 }
-

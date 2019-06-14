@@ -6,11 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/06/11 03:29:32 by afrancoi         ###   ########.fr       */
-=======
-/*   Updated: 2019/06/07 16:34:16 by afrancoi         ###   ########.fr       */
->>>>>>> 96716d9dcb93cec518a2eb5f38a5371001d88cf9
+/*   Updated: 2019/06/14 05:30:39 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +38,7 @@ void		display_opt_l(t_file *list, char *path, int opts)
 	}
 }
 
-void	display_list(t_file *start, char *path, int opts)
+void		display_list(t_file *start, char *path, int opts)
 {
 	t_file *elem;
 
@@ -50,32 +46,34 @@ void	display_list(t_file *start, char *path, int opts)
 	if (opts & OPT_L)
 		return (display_opt_l(start, path, opts));
 	if ((opts & OPTS) || (opts & OPT_R))
-		printf("%s:\n", path);
+	{
+		ft_putstr(path);
+		ft_putendl(":");
+	}
 	if (!start)
 		return ;
 	while (elem)
 	{
-		printf("%s\n", elem->name);
+		ft_putendl(elem->name);
 		elem = elem->next;
 	}
 }
 
-void	display_file(t_file *list, int opts)
+void		display_file(t_file *list, int opts)
 {
-	t_file *elem;
+	t_file	*elem;
 
-	if(!list)
+	if (!list)
 		return ;
-	if (opts & OPT_L)
-		return (display_opt_l(list, NULL, opts));
 	elem = list;
 	while (elem)
 	{
 		if (S_ISREG(elem->stat.st_mode))
 		{
-			printf("%s\n", elem->name);
-			if (elem->next)
-				ft_putchar('\n');
+			if (opts & OPT_L)
+				display_l_wrapper(elem);
+			else
+				ft_putendl(elem->name);
 		}
 		elem = elem->next;
 	}

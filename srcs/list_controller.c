@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_controller.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 16:01:24 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/05/30 12:09:17 by root             ###   ########.fr       */
+/*   Updated: 2019/06/14 01:39:14 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,12 @@ void	stat_wrapper(t_file *elem, t_stat *stat, char *path)
 
 int		fill_node(t_file *elem, t_dirent *dirent, t_stat *stat, char *path)
 {
-	char *tmp;
-
 	if (dirent)
-	{
-		if (!(tmp = join_path(path, dirent->d_name)))
-			return (0);
-		elem->infodir = 1;
 		ft_strcpy(elem->name, dirent->d_name);
-		elem->ino = dirent->d_fileno;
-		elem->type = dirent->d_type;
-	}
 	else
-	{
-		tmp = path;
-		ft_strcpy(elem->name, tmp);
-		elem->infodir = 0;
-	}
-	ft_strcpy(elem->path, tmp);
-	if (dirent)
-	{
-		stat_wrapper(elem, stat, tmp);
-		free(tmp);
-	}
-	else
-		stat_wrapper(elem, stat, path);
+		ft_strcpy(elem->name, path);
+	ft_strcpy(elem->path, path);
+	stat_wrapper(elem, stat, path);
 	return (1);
 }
 
@@ -83,7 +64,7 @@ void	list_del(t_file **start)
 	t_file *tmp;
 	t_file *tmp2;
 
-	if(!*start)
+	if (!*start)
 		return ;
 	tmp = *start;
 	while (tmp)

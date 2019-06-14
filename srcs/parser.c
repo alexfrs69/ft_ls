@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 16:20:40 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/08 20:22:20 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/14 04:23:08 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,36 +30,43 @@ static int		cacl_offset_opt(char **argv, int aci, int avi, int *listoptions)
 	return (0);
 }
 
+static	int		ft_check(int aci, char **argv, int *listoptions)
+{
+	int avi;
+	int ret;
+
+	ret = 0;
+	avi = 0;
+	while (argv[aci][avi])
+	{
+		if (argv[aci][avi] == '-' && argv[aci][avi + 1] != '-')
+		{
+			while (argv[aci][++avi])
+				if (!cacl_offset_opt(argv, aci, avi, listoptions))
+					exit(1);
+			++ret;
+		}
+		else
+		{
+			argv[aci][avi + 1] == '-' ? ++ret : 0;
+			break ;
+		}
+	}
+	return (ret);
+}
+
 int				parse_args(int argc, char **argv, int *decal)
 {
 	int			aci;
-	int			avi;
 	int			listoptions;
 
 	listoptions = 0;
-	aci = 1;
-	while (aci < argc)
+	aci = 0;
+	while (++aci < argc)
 	{
-		avi = 0;
-		while (argv[aci][avi])
-		{
-			if (argv[aci][avi] == '-' && argv[aci][avi + 1] != '-')
-			{
-				while (argv[aci][++avi])
-					if (!cacl_offset_opt(argv, aci, avi, &listoptions))
-						exit(1);
-				++*decal;
-			}
-			else
-			{
-				if (argv[aci][avi + 1] == '-')
-					++*decal;
-				break ;
-			}
-		}
-		aci++;
+		*decal += ft_check(aci, argv, &listoptions);
 	}
-	if((argc - *decal) > 2)
+	if ((argc - *decal) > 2)
 		listoptions += OPTS;
 	return (listoptions);
 }

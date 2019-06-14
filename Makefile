@@ -10,8 +10,7 @@ SRCS = 	srcs/main.c					\
 		srcs/file_controller.c		\
 		srcs/list_controller.c		\
 		srcs/display_controller.c	\
-		srcs/option_recursive.c	\
-		srcs/router.c				\
+		srcs/option_recursive.c		\
 		srcs/parser.c				\
 		srcs/utils.c				\
 		srcs/error.c				\

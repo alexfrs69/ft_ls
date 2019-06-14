@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 06:43:47 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/10 21:31:35 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/14 04:24:16 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int		check_time(t_file *a, t_file *b)
 		ret = 1;
 	else if (asec == bsec)
 	{
-		printf("a->%ld | b->%ld\n", (long)a->stat.st_mtimespec.tv_nsec, (long)b->stat.st_mtimespec.tv_nsec);
 		if (a->stat.st_mtimespec.tv_nsec >= b->stat.st_mtimespec.tv_nsec)
 			ret = 1;
 		else
@@ -33,7 +32,7 @@ int		check_time(t_file *a, t_file *b)
 	}
 	else
 		ret = 0;
-	return(ret);
+	return (ret);
 }
 
 int		reverse_time(t_file *a, t_file *b)
@@ -55,7 +54,7 @@ int		reverse_time(t_file *a, t_file *b)
 	}
 	else
 		ret = 0;
-	return(ret);
+	return (ret);
 }
 
 int		check_strcmp(t_file *a, t_file *b)
@@ -68,7 +67,7 @@ int		reverse_cmp(t_file *a, t_file *b)
 	return (ft_strcmp(a->name, b->name) >= 0);
 }
 
-t_cmp ft_getcmp(int opts)
+t_cmp	ft_getcmp(int opts)
 {
 	if (opts & OPT_T)
 	{

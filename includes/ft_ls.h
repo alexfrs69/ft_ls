@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/11 03:07:03 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/14 05:00:14 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ typedef struct dirent	t_dirent;
 
 typedef struct			s_file {
 	t_stat				stat;
-	ino_t				ino;
-	__uint8_t			type;
 	char				name[1024];
-	int					infodir;
+	int					dir;
 	char				path[PATH_MAX + 1];
 	struct s_file		*next;
 }						t_file;
@@ -78,6 +76,7 @@ int						options_recursive(t_file *queue, int listoptions);
 void					display_opt_l(t_file *list, char *path, int opts);
 void					display_l_wrapper(t_file *elem);
 int						get_total_size(t_file *list);
+int						is_link_dir(char *path);
 
 /*
 ** Error
