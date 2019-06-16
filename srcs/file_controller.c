@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/14 05:34:24 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/16 05:08:42 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		save_dir(char *path, int listopt)
 		if (!(tmp = join_path(path, dirent->d_name)))
 			continue ;
 		start = init_node(start, dirent, NULL, tmp);
+		ft_strdel(&tmp);
 	}
 	closedir(dir);
 	ft_mergesort(&start, listopt);
@@ -50,15 +51,11 @@ void	save_list_dir(t_file *list, int listopts)
 	cur = list;
 	while (cur)
 	{
-		if ((S_ISDIR(cur->stat.st_mode)) || (S_ISLNK(cur->stat.st_mode)))
-		{
-			if (S_ISLNK(cur->stat.st_mode) && (listopts & OPT_L))
-				display_l_wrapper(cur);
-			else
+		if ((S_ISDIR(cur->stat.st_mode))
+			|| (S_ISLNK(cur->stat.st_mode) && !(listopts & OPT_L)))
 				save_dir(cur->path, listopts);
-		}
 		if ((cur = cur->next))
-			if (!S_ISREG(cur->stat.st_mode))
+			if (S_ISDIR(cur->stat.st_mode))
 				ft_putchar('\n');
 	}
 	list_del(&list);

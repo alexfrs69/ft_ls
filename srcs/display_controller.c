@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/14 05:30:39 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/16 05:28:39 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		display_list(t_file *start, char *path, int opts)
 	elem = start;
 	if (opts & OPT_L)
 		return (display_opt_l(start, path, opts));
-	if ((opts & OPTS) || (opts & OPT_R))
+	if (((opts & OPTS) || (opts & OPT_R)) && path)
 	{
 		ft_putstr(path);
 		ft_putendl(":");
@@ -62,19 +62,25 @@ void		display_list(t_file *start, char *path, int opts)
 void		display_file(t_file *list, int opts)
 {
 	t_file	*elem;
+	int		nw;
 
+	nw = 0;
 	if (!list)
 		return ;
 	elem = list;
 	while (elem)
 	{
-		if (S_ISREG(elem->stat.st_mode))
+		if (!S_ISDIR(elem->stat.st_mode))
 		{
 			if (opts & OPT_L)
 				display_l_wrapper(elem);
-			else
+			else if (!S_ISLNK(elem->stat.st_mode))
 				ft_putendl(elem->name);
 		}
+		else
+			nw = 1;
 		elem = elem->next;
 	}
+	if(nw && !(opts & OPT_L))
+		ft_putchar('\n');
 }
