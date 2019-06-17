@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 16:20:40 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/17 03:46:18 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/17 03:53:39 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ int				parse_args(int argc, char **argv, int *decal)
 	listoptions = 0;
 	aci = 0;
 	while (++aci < argc)
-	{
 		*decal += ft_check(aci, argv, &listoptions);
-	}
 	if ((argc - *decal) > 2)
 		listoptions += OPTS;
 	return (listoptions);

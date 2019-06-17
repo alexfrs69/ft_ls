@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/16 05:07:41 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/17 04:16:55 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,10 @@ static	t_file	*recur_wrapper(t_file *elem, t_file **new, int opts)
 {
 	t_file *dir;
 
+	*new = NULL;
 	dir = NULL;
-	if ((S_ISDIR(elem->stat.st_mode)) || (S_ISLNK(elem->stat.st_mode) && !(opts & OPT_L)))
+	if ((S_ISDIR(elem->stat.st_mode))
+		|| (S_ISLNK(elem->stat.st_mode) && !(opts & OPT_L)))
 	{
 		if (!(dir = save_recur_dir(elem->path, new, opts)))
 		{
@@ -98,8 +100,7 @@ int				options_recursive(t_file *list, int opts)
 	tmp = list;
 	while (list)
 	{
-		new = NULL;
-		if((dir = recur_wrapper(list, &new, opts)))
+		if ((dir = recur_wrapper(list, &new, opts)))
 		{
 			ft_mergesort(&dir, opts);
 			display_list(dir, list->path, opts);
@@ -111,10 +112,8 @@ int				options_recursive(t_file *list, int opts)
 			options_recursive(new, opts);
 		}
 		if ((list = list->next))
-			if (S_ISDIR(list->stat.st_mode))
-				ft_putchar('\n');
+			S_ISDIR(list->stat.st_mode) ? ft_putchar('\n') : 0;
 	}
-	if (tmp)
-		list_del(&tmp);
+	tmp ? list_del(&tmp) : 0;
 	return (1);
 }

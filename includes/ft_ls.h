@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/14 05:00:14 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/17 04:02:04 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@
 */
 
 # define OPT_A		1
-# define OPT_G		2
-# define OPT_L		4
-# define OPT_R		8
-# define OPT_T		16
-# define OPT_REV	32
-# define OPTS		64
+# define OPT_L		2
+# define OPT_R		4
+# define OPT_T		8
+# define OPT_REV	16
+# define OPTS		32
 
 # include <dirent.h>
 # include <sys/stat.h>

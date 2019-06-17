@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/16 05:08:42 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/17 04:14:00 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,20 @@
 #include "ft_ls.h"
 #include <errno.h>
 
-int		save_dir(char *path, int listopt)
+static char	*check(char *name, char *path, int listopt)
+{
+	char *ret;
+
+	ret = NULL;
+	if (!(listopt & OPT_A))
+		if (name[0] == '.')
+			return (NULL);
+	if (!(ret = join_path(path, name)))
+		return (NULL);
+	return (ret);
+}
+
+int			save_dir(char *path, int listopt)
 {
 	DIR				*dir;
 	t_dirent		*dirent;
@@ -29,10 +42,7 @@ int		save_dir(char *path, int listopt)
 	}
 	while ((dirent = readdir(dir)))
 	{
-		if (!(listopt & OPT_A))
-			if (dirent->d_name[0] == '.')
-				continue ;
-		if (!(tmp = join_path(path, dirent->d_name)))
+		if (!(tmp = check(dirent->d_name, path, listopt)))
 			continue ;
 		start = init_node(start, dirent, NULL, tmp);
 		ft_strdel(&tmp);
@@ -44,7 +54,7 @@ int		save_dir(char *path, int listopt)
 	return (1);
 }
 
-void	save_list_dir(t_file *list, int listopts)
+void		save_list_dir(t_file *list, int listopts)
 {
 	t_file *cur;
 
@@ -53,7 +63,7 @@ void	save_list_dir(t_file *list, int listopts)
 	{
 		if ((S_ISDIR(cur->stat.st_mode))
 			|| (S_ISLNK(cur->stat.st_mode) && !(listopts & OPT_L)))
-				save_dir(cur->path, listopts);
+			save_dir(cur->path, listopts);
 		if ((cur = cur->next))
 			if (S_ISDIR(cur->stat.st_mode))
 				ft_putchar('\n');
@@ -61,7 +71,7 @@ void	save_list_dir(t_file *list, int listopts)
 	list_del(&list);
 }
 
-void	route_to(t_file *list, int listopts)
+void		route_to(t_file *list, int listopts)
 {
 	ft_mergesort(&list, listopts);
 	display_file(list, listopts);
