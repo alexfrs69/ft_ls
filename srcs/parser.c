@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 16:20:40 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/14 04:23:08 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/17 03:46:18 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static int		cacl_offset_opt(char **argv, int aci, int avi, int *listoptions)
 {
 	int			indexpow;
-	static char	*str = "aGlRtr";
+	static char	*str = "alRtr";
 
 	if (argv[aci][avi] && ft_strchr(str, argv[aci][avi]))
 	{
@@ -26,8 +26,15 @@ static int		cacl_offset_opt(char **argv, int aci, int avi, int *listoptions)
 		return (1);
 	}
 	else
-		ft_putendl("Illegal options");
-	return (0);
+	{
+		ft_putstr("ft_ls: illegal option -- ");
+		ft_putchar(argv[aci][avi]);
+		ft_putchar('\n');
+		ft_putstr("usage: ft_ls [-");
+		ft_putstr(str);
+		ft_putendl("] [file ...]");
+		return (0);
+	}
 }
 
 static	int		ft_check(int aci, char **argv, int *listoptions)
