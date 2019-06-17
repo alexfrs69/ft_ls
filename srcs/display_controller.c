@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/16 05:28:39 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/17 03:38:13 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ void		display_file(t_file *list, int opts)
 			else if (!S_ISLNK(elem->stat.st_mode))
 				ft_putendl(elem->name);
 		}
-		else
+		else if (!nw)
 			nw = 1;
 		elem = elem->next;
 	}
-	if(nw && !(opts & OPT_L))
+	if (nw && !(opts & OPT_L))
 		ft_putchar('\n');
 }
