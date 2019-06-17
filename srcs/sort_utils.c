@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 06:43:47 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/14 04:24:16 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/06/17 03:41:56 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,12 @@
 
 int		check_time(t_file *a, t_file *b)
 {
-	long int	asec;
-	long int	bsec;
-	int			ret;
-
-	asec = a->stat.st_mtimespec.tv_sec;
-	bsec = b->stat.st_mtimespec.tv_sec;
-	if (asec > bsec)
-		ret = 1;
-	else if (asec == bsec)
-	{
-		if (a->stat.st_mtimespec.tv_nsec >= b->stat.st_mtimespec.tv_nsec)
-			ret = 1;
-		else
-			ret = 0;
-	}
-	else
-		ret = 0;
-	return (ret);
+	return (a->stat.st_mtimespec.tv_sec >= b->stat.st_mtimespec.tv_sec);
 }
 
 int		reverse_time(t_file *a, t_file *b)
 {
-	long int	asec;
-	long int	bsec;
-	int			ret;
-
-	asec = a->stat.st_mtimespec.tv_sec;
-	bsec = b->stat.st_mtimespec.tv_sec;
-	if (asec < bsec)
-		ret = 1;
-	else if (asec == bsec)
-	{
-		if (a->stat.st_mtimespec.tv_nsec <= b->stat.st_mtimespec.tv_nsec)
-			ret = 1;
-		else
-			ret = 0;
-	}
-	else
-		ret = 0;
-	return (ret);
+	return (a->stat.st_mtimespec.tv_sec <= b->stat.st_mtimespec.tv_sec);
 }
 
 int		check_strcmp(t_file *a, t_file *b)
