@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 13:04:58 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/17 04:02:04 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/07/13 17:58:10 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,21 @@ typedef struct			s_file {
 	struct s_file		*next;
 }						t_file;
 
-typedef int (*t_cmp)(t_file*, t_file*);
+typedef int	(*t_cmp)	(t_file*, t_file*);
 
 /*
 ** File struct system
 */
 
-t_file					*add_node(t_file *start, t_dirent *dirent, t_stat *stat, char *path);
-t_file					*init_node(t_file *start, t_dirent *dirent, t_stat *stat, char *path);
+t_file					*add_node(t_file *start, t_dirent *dirent,
+						t_stat *stat, char *path);
+t_file					*init_node(t_file *start, t_dirent *dirent,
+						t_stat *stat, char *path);
 void					list_del(t_file **start);
 void					display_list(t_file *start, char *path, int opts);
 void					display_file(t_file *list, int opts);
-int						fill_node(t_file *elem, t_dirent *dirent, t_stat *stat, char *path);
+int						fill_node(t_file *elem, t_dirent *dirent,
+						t_stat *stat, char *path);
 int						save_dir(char *path, int listoptions);
 void					save_list_dir(t_file *list, int listopts);
 
@@ -81,7 +84,6 @@ int						is_link_dir(char *path);
 ** Error
 */
 void					ft_error(int errnb, char *path);
-
 
 /*
 ** Sorting functions
