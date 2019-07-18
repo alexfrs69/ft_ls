@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:13:08 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/07/01 23:19:52 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/07/19 00:29:33 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ static void	ft_kickstart(int argc, char **argv)
 			if (!lstat(argv[i], &stat))
 				list = init_node(list, NULL, &stat, argv[i]);
 			else
-				printf("ft_ls: %s: no such file or directory\n", argv[i]);
+			{
+				ft_putstr("ft_ls: ");
+				ft_putstr(argv[i]);
+				ft_putendl(" no such file or directory");
+			}
 		}
 	}
 	route_to(list, listopt);
