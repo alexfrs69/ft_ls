@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/17 04:16:55 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/07/23 23:46:51 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,13 @@
 #include "libft.h"
 #include <errno.h>
 
-char			*join_path(char *path, char *name)
+static int		ft_opts_a(char *name)
 {
-	char *ret;
-	char *tmp;
-
-	if (*path == '/' && ft_strlen(path) == 1)
-		return (ft_strjoin(path, name));
-	tmp = ft_strjoin(path, "/");
-	ret = ft_strjoin(tmp, name);
-	free(tmp);
-	return (ret);
+	if (ft_strequ(name, "."))
+		return (0);
+	if (ft_strequ(name, ".."))
+		return (0);
+	return (1);
 }
 
 static char		*check(char *name, char *path, int opts)
@@ -32,13 +28,10 @@ static char		*check(char *name, char *path, int opts)
 	char *ret;
 
 	ret = NULL;
-	if (ft_strequ(name, ".")
-		|| ft_strequ(name, ".."))
-		return (0);
 	if (!(opts & OPT_A))
 		if (name[0] == '.')
 			return (0);
-	if (!(ret = join_path(path, name)))
+	if (!(ret = ft_pathjoin(path, name)))
 		return (0);
 	return (ret);
 }
@@ -59,8 +52,9 @@ static t_file	*save_recur_dir(char *path, t_file **new, int opts)
 			if (!(tmp = check(dirent->d_name, path, opts)))
 				continue ;
 			lstat(tmp, &stat);
-			if (S_ISDIR(stat.st_mode)
-				|| (S_ISLNK(stat.st_mode) && is_link_dir(tmp)))
+			if ((S_ISDIR(stat.st_mode)
+				|| (S_ISLNK(stat.st_mode))) && is_link_dir(tmp)
+				&& ft_opts_a(dirent->d_name))
 				*new = init_node(*new, dirent, &stat, tmp);
 			ft_strdel(&tmp);
 			start = init_node(start, dirent, &stat, path);

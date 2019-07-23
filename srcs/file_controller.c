@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 10:49:53 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/17 04:14:00 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/07/23 23:43:45 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*check(char *name, char *path, int listopt)
 	if (!(listopt & OPT_A))
 		if (name[0] == '.')
 			return (NULL);
-	if (!(ret = join_path(path, name)))
+	if (!(ret = ft_pathjoin(path, name)))
 		return (NULL);
 	return (ret);
 }
