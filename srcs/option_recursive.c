@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 19:09:01 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/07/23 23:46:51 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/07/25 20:00:47 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static t_file	*save_recur_dir(char *path, t_file **new, int opts)
 				continue ;
 			lstat(tmp, &stat);
 			if ((S_ISDIR(stat.st_mode)
-				|| (S_ISLNK(stat.st_mode))) && is_link_dir(tmp)
+				|| ((S_ISLNK(stat.st_mode) && is_link_dir(tmp))))
 				&& ft_opts_a(dirent->d_name))
 				*new = init_node(*new, dirent, &stat, tmp);
 			ft_strdel(&tmp);
