@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 16:20:40 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/08/04 05:31:36 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/08/04 07:01:53 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int				parse_args(int argc, char **argv, int *decal)
 	{
 		if (ft_strequ(argv[aci], "--"))
 		{
-			printf("%d | detected --\n", aci);
 			++*decal;
 			break ;
 		}
