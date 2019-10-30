@@ -6,11 +6,12 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 01:22:05 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/14 05:34:36 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:57:44 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "libft.h"
 #include <unistd.h>
 
 t_file	*init_node(t_file *start, t_dirent *dirent, t_stat *stat, char *path)
@@ -51,4 +52,20 @@ int		is_link_dir(char *path)
 			return (0);
 	}
 	return (0);
+}
+
+char	*ft_check_paths(t_file *elem, int opts, int *malloced)
+{
+	char *fullpath;
+
+	if ((opts & OPT_R) && ft_strequ(elem->name, elem->path))
+		fullpath = elem->path;
+	else if (opts & OPT_R)
+	{
+		fullpath = ft_pathjoin(elem->path, elem->name);
+		*malloced = 1;
+	}
+	else
+		fullpath = elem->path;
+	return (fullpath);
 }

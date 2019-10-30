@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:10:52 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/07/13 16:55:43 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:31:16 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		display_opt_l(t_file *list, char *path, int opts)
 	}
 	while (cur)
 	{
-		display_l_wrapper(cur);
+		display_l_wrapper(cur, opts);
 		cur = cur->next;
 	}
 }
@@ -71,7 +71,7 @@ void		display_file(t_file *list, int opts)
 		if (!S_ISDIR(elem->stat.st_mode))
 		{
 			if (opts & OPT_L)
-				display_l_wrapper(elem);
+				display_l_wrapper(elem, opts);
 			else if (!S_ISLNK(elem->stat.st_mode))
 				ft_putendl(elem->name);
 		}

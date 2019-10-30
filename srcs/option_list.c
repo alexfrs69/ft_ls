@@ -6,7 +6,7 @@
 /*   By: afrancoi <afrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 22:43:36 by afrancoi          #+#    #+#             */
-/*   Updated: 2019/06/14 06:09:28 by afrancoi         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:53:25 by afrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,23 +122,29 @@ static void		ft_typenperm(t_file *elem)
 	ft_perm(elem);
 }
 
-void			display_l_wrapper(t_file *elem)
+void			display_l_wrapper(t_file *elem, int opts)
 {
 	char	buf[PATH_MAX + 1];
 	ssize_t	n;
+	char	*fullpath;
+	int		malloced;
 
+	malloced = 0;
 	ft_typenperm(elem);
 	if (S_ISLNK(elem->stat.st_mode))
 	{
-		if ((n = readlink(elem->path, buf, PATH_MAX)) != -1)
+		fullpath = ft_check_paths(elem, opts, &malloced);
+		if ((n = readlink(fullpath, buf, PATH_MAX)) != -1)
 		{
 			buf[n] = '\0';
-			ft_putstr(elem->path);
+			ft_putstr(elem->name);
 			ft_putstr(" -> ");
 			ft_putendl(buf);
 		}
 		else
-			ft_error(errno, elem->path);
+			ft_error(errno, elem->name);
+		if (malloced)
+			ft_strdel(&fullpath);
 	}
 	else
 		ft_putendl(elem->name);
